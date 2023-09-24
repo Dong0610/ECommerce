@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/icon_admin_home"
+        android:icon="@drawable/ic_round_home"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/ic_order_bill"
+        android:icon="@drawable/ic_check_order"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/ic_add_sp"
+        android:icon="@drawable/ic_round_add"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/ic_revenue"
+        android:icon="@drawable/ic_revenue_order"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/ic_account"
+        android:icon="@drawable/ic_round_person"
+        tools:ignore="MenuTitle" />
+
+</menu>

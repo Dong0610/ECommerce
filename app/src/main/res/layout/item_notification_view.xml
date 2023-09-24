@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dong.duan.ecommerce.utility.CustomConstrainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:strokeColor="#ccc"
+    android:layout_marginVertical="@dimen/_2sdp"
+    app:strokeWidth="@dimen/_1sdp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txt_noti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/worksans_semi_bold"
+        android:text="Đơn hàng của bạn đã được tạo"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/textcolor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:fontFamily="@font/worksans_medium"
+        android:text="Đơn hàng của bạn đã được tạo"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/textcolor2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_noti" />
+
+    <TextView
+        android:id="@+id/txt_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:fontFamily="@font/worksans_medium"
+        android:text="Chi tiết"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/textcolor2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_time" />
+
+
+</dong.duan.ecommerce.utility.CustomConstrainLayout>

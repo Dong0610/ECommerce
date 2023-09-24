@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ECommerce" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+
+    <style name="Theme.ECommerce" parent="Base.Theme.ECommerce" >
+        <!-- Customize the status bar color -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <!-- Customize the status bar text color -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+</resources>

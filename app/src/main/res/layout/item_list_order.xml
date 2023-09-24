@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dong.duan.ecommerce.utility.CustomLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/customLayout"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="@dimen/_3sdp"
+    android:orientation="vertical"
+    android:padding="@dimen/_12sdp">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_id_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:fontFamily="@font/worksans_semi_bold"
+            android:text="Dominic Ovo"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/worksans_medium"
+        android:text="@string/order_at_e_comm_august_1_2017"
+        android:textAllCaps="true"
+        android:textColor="@color/textcolor2"
+        android:textSize="@dimen/_12sdp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="#EBF0FF" />
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_4sdp">
+
+        <TextView
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:fontFamily="@font/worksans_medium"
+            android:gravity="start"
+            android:text="@string/order_status"
+            android:textColor="@color/textcolor2"
+            android:textSize="@dimen/_13sdp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:gravity="end"
+                android:text="Shipping"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_13sdp" />
+
+            <ImageView
+                android:layout_marginStart="@dimen/_6sdp"
+                android:id="@+id/ic_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/txt_up_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/worksans_medium"
+        android:gravity="end"
+        android:layout_gravity="end"
+        android:text="@string/order_status"
+        android:textColor="@color/textcolor2"
+        android:textSize="@dimen/_11sdp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_4sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:fontFamily="@font/worksans_medium"
+            android:gravity="start"
+            android:text="@string/count_item"
+            android:textColor="@color/textcolor2"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/txt_shiping_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/worksans_medium"
+            android:gravity="end"
+            android:text="@string/_2_items_purchased"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/_13sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_4sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:fontFamily="@font/worksans_medium"
+            android:gravity="start"
+            android:text="@string/price"
+            android:textColor="@color/textcolor2"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/txt_total_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/worksans_medium"
+            android:gravity="end"
+            android:text="@string/_598_86_"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/_13sdp" />
+    </LinearLayout>
+
+
+</dong.duan.ecommerce.utility.CustomLinearLayout>
