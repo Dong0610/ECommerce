@@ -102,7 +102,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                         putBoolean(Constant.KEY_IS_SIGN_IN,true)
                         putString(Constant.USER_ID,userID)
                         putString(Constant.USER_NAME, binding.edtusname.text.toString())
-                        putString(Constant.USER_EMAIL, email)
+                        putString(Constant.USER_EMAIL, binding.edtemail.text.toString())
                         putString(Constant.USER_PASS, pass)
                         putString(Constant.USER_BIRTHDAY, "")
                         putString(Constant.USER_IMG, "")

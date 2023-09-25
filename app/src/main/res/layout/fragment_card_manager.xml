@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/_6sdp"
             android:fontFamily="@font/worksans_bold"
             android:text="Card"
-            android:textColor="#223263"
+            android:textColor="#9C27B0"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_back"

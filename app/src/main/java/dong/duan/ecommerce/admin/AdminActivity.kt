@@ -9,7 +9,6 @@ import dong.duan.ecommerce.R
 import dong.duan.ecommerce.activity.AddDataActivity
 import dong.duan.ecommerce.activity.SplashActivity
 import dong.duan.ecommerce.databinding.ActivitySalerBinding
-import dong.duan.ecommerce.fragment.main.SearchFragment
 import dong.duan.ecommerce.interfaces.OnUpdateProductCount
 import dong.duan.ecommerce.library.OnPutImageListener
 import dong.duan.ecommerce.library.base.BaseActivity
@@ -131,7 +130,7 @@ class AdminActivity : BaseActivity<ActivitySalerBinding>() , OnUpdateProductCoun
                 }
 
                 R.id.ic_order_bill -> {
-                    openFragment(SearchFragment())
+                    openFragment(AdminOrderFragment())
                     return@OnNavigationItemSelectedListener true
                 }
 
@@ -147,7 +146,7 @@ class AdminActivity : BaseActivity<ActivitySalerBinding>() , OnUpdateProductCoun
 
                 R.id.ic_account -> {
 //                    openFragment(FragmentAccount())
-                    SignOut()
+                   // SignOut()
                     return@OnNavigationItemSelectedListener true
                 }
             }

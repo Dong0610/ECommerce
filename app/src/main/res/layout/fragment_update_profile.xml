@@ -51,6 +51,8 @@
         android:layout_width="match_parent"
         android:id="@+id/ll_update_name"
         android:visibility="gone"
+        android:background="@color/white"
+        android:clickable="false"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,6 +67,7 @@
             android:layout_marginBottom="@dimen/_12sdp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+
             app:layout_constraintBottom_toTopOf="@+id/btn_update_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +199,7 @@
 
                     android:src="@drawable/ic_round_mail" />
 
-                <EditText
+                <TextView
                     android:layout_marginStart="@dimen/_6sdp"
                     android:id="@+id/edt_new_email"
                     android:layout_width="match_parent"
@@ -222,21 +225,6 @@
                 android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/btn_update_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_btn_account_end"
-            android:fontFamily="@font/worksans_semi_bold"
-            android:paddingVertical="@dimen/_10sdp"
-            android:text="@string/save"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13sdp"
-            android:layout_marginBottom="@dimen/_24sdp"
-            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

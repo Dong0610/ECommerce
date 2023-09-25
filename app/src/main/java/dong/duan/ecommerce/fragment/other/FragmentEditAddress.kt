@@ -43,23 +43,44 @@ class FragmentEditAddress(var address: Address?) : BaseFragment<FragmentEditAddr
         hasmap[Constant.ADR_F_PHONE] = firstNum
         hasmap[Constant.ADR_S_PHONE] = secondNum
 
-        database.getReference(Constant.KEY_ADDRESS)
-            .child(sharedPreferences.getString(Constant.USER_ID).toString())
-            .push()
-            .setValue(hasmap)
-            .addOnCompleteListener {
-                show_toast("Địa chỉ đã được lưu lại")
-                Handler(Looper.myLooper()!!)
-                    .postDelayed({
-                        closeFragment(this@FragmentEditAddress)
-                    }, 1500L)
-            }.addOnFailureListener { e->
-                show_toast(e.message.toString())
-                Handler(Looper.myLooper()!!)
-                    .postDelayed({
-                        closeFragment(this@FragmentEditAddress)
-                    }, 1500L)
-            }
+        if(address!=null){
+            database.getReference(Constant.KEY_ADDRESS)
+                .child(sharedPreferences.getString(Constant.USER_ID).toString())
+                .child(address!!.idAddress)
+                .setValue(hasmap)
+                .addOnCompleteListener {
+                    show_toast("Địa chỉ đã được lưu lại")
+                    Handler(Looper.myLooper()!!)
+                        .postDelayed({
+                            closeFragment(this@FragmentEditAddress)
+                        }, 1500L)
+                }.addOnFailureListener { e->
+                    show_toast(e.message.toString())
+                    Handler(Looper.myLooper()!!)
+                        .postDelayed({
+                            closeFragment(this@FragmentEditAddress)
+                        }, 1500L)
+                }
+        }
+        else{
+            database.getReference(Constant.KEY_ADDRESS)
+                .child(sharedPreferences.getString(Constant.USER_ID).toString())
+                .push()
+                .setValue(hasmap)
+                .addOnCompleteListener {
+                    show_toast("Địa chỉ đã được lưu lại")
+                    Handler(Looper.myLooper()!!)
+                        .postDelayed({
+                            closeFragment(this@FragmentEditAddress)
+                        }, 1500L)
+                }.addOnFailureListener { e->
+                    show_toast(e.message.toString())
+                    Handler(Looper.myLooper()!!)
+                        .postDelayed({
+                            closeFragment(this@FragmentEditAddress)
+                        }, 1500L)
+                }
+        }
     }
 
     var firstNum = ""
@@ -87,7 +108,7 @@ class FragmentEditAddress(var address: Address?) : BaseFragment<FragmentEditAddr
     private fun initData() {
         binding.edtFirstNum.setText(address!!.phoneNumber)
         binding.edtSecondNum.setText(address!!.phoneNumber2)
-        binding.edtRemindName.setText(address!!.receiverName)
+        binding.edtRemindName.setText(address!!.remindName)
         binding.edtDetailLocation.setText(address!!.location)
         binding.edtReciveName.setText(address!!.receiverName)
     }

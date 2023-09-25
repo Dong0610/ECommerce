@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.R
-import dong.duan.ecommerce.adapter.AllCommentAdapter
-import dong.duan.ecommerce.adapter.SlideShowAdapter
+import dong.duan.ecommerce.adapter.user.AllCommentAdapter
+import dong.duan.ecommerce.adapter.user.SlideShowAdapter
 import dong.duan.ecommerce.databinding.FragmentProductDetailBinding
 import dong.duan.ecommerce.databinding.ItemListProductSizeBinding
 import dong.duan.ecommerce.dialog.DialogSuccess
 import dong.duan.ecommerce.library.GenericAdapter
+import dong.duan.ecommerce.library.data.MyDatabaseHelper
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Product
@@ -72,12 +73,63 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
     }
 
     private fun loadPorduct(product: Product) {
+        val listLove = MyDatabaseHelper().readFavorite()
+
+        val isLove = listLove.find { it == product.id }
+
+        binding.icLove.setImageResource(if (isLove != null) R.drawable.ic_love_card else R.drawable.ic_love_app)
         binding.txtPrice.text = product.price.toString() + "$"
         binding.txtName.text = product.name
         binding.rating.numStars = 3
         binding.txtStyle.text = product.style
         binding.txtIntroduce.text = product.description
+
+        binding.icLove.setOnClickListener {
+            if (isLove == null) {
+                MyDatabaseHelper().insertFavorite(product.id)
+                addToLove(product)
+                binding.icLove.setImageResource(R.drawable.ic_love_card)
+            } else {
+                MyDatabaseHelper().deleteFavorite(product.id)
+                deleteLove(product.id)
+                binding.icLove.setImageResource(R.drawable.ic_love_app)
+            }
+            loadPorduct(product)
+        }
         initBanner()
+    }
+
+
+    private fun deleteLove(productID: String) {
+        database.getReference(Constant.KEY_LOVE)
+            .child(sharedPreferences.getString(Constant.USER_ID).toString())
+            .child(productID)
+            .removeValue()
+            .addOnCompleteListener {
+                show_toast("Đã xóa khỏi danh sách yêu thích!")
+            }
+    }
+
+    private fun addToLove(product: Product) {
+        val hasMap = HashMap<String, Any>()
+        hasMap[Constant.LOVE_US_ID] = sharedPreferences.getString(Constant.USER_ID).toString()
+        hasMap[Constant.LOVE_USER_NAME] = sharedPreferences.getString(Constant.USER_NAME).toString()
+        hasMap[Constant.LOVE_PRODUCT_ID] = product.id
+        hasMap[Constant.LOVE_PRODUCT_IMG] = product.imageUrl!!.get(0).toString()
+        hasMap[Constant.LOVE_PRODUCT_NAME] = product.name
+        hasMap[Constant.LOVE_PRODUCT_SHOP_ID] = product.idShop
+        hasMap[Constant.LOVE_PRODUCT_PRICE] = product.price
+        hasMap[Constant.LOVE_PRODUCT_ISBUY] = true
+        hasMap[Constant.LOVE_PRODUCT_COUNT] = 1
+        database.getReference(Constant.KEY_LOVE)
+            .child(sharedPreferences.getString(Constant.USER_ID).toString())
+            .child(product.id)
+            .setValue(hasMap)
+            .addOnCompleteListener {
+                show_toast("Đã thêm vào danh sách yêu thích!")
+            }.addOnFailureListener {
+                show_toast(it.message.toString())
+            }
     }
 
     private fun initBanner() {
@@ -173,27 +225,28 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    task.result.documents.filterIndexed { index, doc->
+                    task.result.documents.filterIndexed { index, doc ->
                         if (index <= 3) {
-                        val review = ProductReview().apply {
-                            reviewId = doc.id
-                            reviewComment = doc.getString(Constant.REVIEW_COMMERNT) ?: ""
-                            productID
-                            reviewImg = doc[Constant.REVIEW_IMG] as? ArrayList<Any> ?: null
-                            reviewUserId = doc[Constant.REVIEW_USER_ID].toString()
-                            reviewUserName = doc[Constant.REVIEW_USER_NAME].toString()
-                            reviewUserImg = doc[Constant.REVIEW_USER_IMG].toString()
-                            reviewStar = doc[Constant.REVIEW_STAR].toString().toFloat()
-                            reviewComment = doc[Constant.REVIEW_COMMERNT].toString()
-                            reviewTime = (doc[Constant.REVIEW_TIME]).toString()
+                            val review = ProductReview().apply {
+                                reviewId = doc.id
+                                reviewComment = doc.getString(Constant.REVIEW_COMMERNT) ?: ""
+                                productID
+                                reviewImg = doc[Constant.REVIEW_IMG] as? ArrayList<Any> ?: null
+                                reviewUserId = doc[Constant.REVIEW_USER_ID].toString()
+                                reviewUserName = doc[Constant.REVIEW_USER_NAME].toString()
+                                reviewUserImg = doc[Constant.REVIEW_USER_IMG].toString()
+                                reviewStar = doc[Constant.REVIEW_STAR].toString().toFloat()
+                                reviewComment = doc[Constant.REVIEW_COMMERNT].toString()
+                                reviewTime = (doc[Constant.REVIEW_TIME]).toString()
+                            }
+                            if(review.productID.equals(product.id)){
+                                listData.add(review)
+                            }
+                        } else {
+                            return@filterIndexed false
                         }
-                        listData.add(review)
-                    } else {
-                        return@filterIndexed false
+                        true
                     }
-                    true
-                }
-                calback(listData)
                     calback(listData)
                 }
             }.addOnFailureListener {

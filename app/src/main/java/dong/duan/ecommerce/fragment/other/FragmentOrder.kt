@@ -3,7 +3,7 @@ package dong.duan.ecommerce.fragment.other
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
-import dong.duan.ecommerce.adapter.ListOrderAdapter
+import dong.duan.ecommerce.adapter.user.ListOrderAdapter
 import dong.duan.ecommerce.databinding.FragmentYourOrderBinding
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
@@ -17,7 +17,7 @@ class FragmentOrder : BaseFragment<FragmentYourOrderBinding>() {
     ) = FragmentYourOrderBinding.inflate(layoutInflater)
 
 
-    var order_adapter:ListOrderAdapter ?= null
+    var order_adapter: ListOrderAdapter?= null
     override fun initView() {
         binding.icBack.setOnClickListener {
             closeFragment(this)
@@ -29,9 +29,6 @@ class FragmentOrder : BaseFragment<FragmentYourOrderBinding>() {
         getOrder { item->
             order_adapter!!.setItems(item)
         }
-
-
-
     }
 
     fun getOrder(calback:(MutableList<Order>)->Unit){
@@ -61,7 +58,10 @@ class FragmentOrder : BaseFragment<FragmentYourOrderBinding>() {
                             phoneNumber2 = item.getString(Constant.ODR_ADR_S_PHONE).toString() ?:""
 
                         }
-                        listData.add(order)
+                        if(order.userId.equals(sharedPreferences.getString(Constant.USER_ID, "").toString())){
+                            listData.add(order)
+                        }
+
                     }
                     calback(listData)
                 }

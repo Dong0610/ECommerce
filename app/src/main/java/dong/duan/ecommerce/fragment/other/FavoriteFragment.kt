@@ -3,8 +3,8 @@ package dong.duan.ecommerce.fragment.other
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
-import dong.duan.ecommerce.adapter.MyFavoriteAdapter
-import dong.duan.ecommerce.adapter.OnFavoriteSelected
+import dong.duan.ecommerce.adapter.user.MyFavoriteAdapter
+import dong.duan.ecommerce.adapter.user.OnFavoriteSelected
 import dong.duan.ecommerce.databinding.FavoriteFragmentBinding
 import dong.duan.ecommerce.fragment.main.HomeFragment
 import dong.duan.ecommerce.library.data.MyDatabaseHelper
