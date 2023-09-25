@@ -1,4 +1,4 @@
-package dong.duan.ecommerce.adapter
+package dong.duan.ecommerce.adapter.user
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

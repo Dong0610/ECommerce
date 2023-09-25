@@ -1,11 +1,11 @@
-package dong.duan.ecommerce.adapter
+package dong.duan.ecommerce.adapter.user
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.databinding.ItemSreachViewBinding
 
-class SearchAdapter(var onSearch:OnSearchItem):BaseAdapter<String,ItemSreachViewBinding>() {
+class SearchAdapter(var onSearch: OnSearchItem):BaseAdapter<String,ItemSreachViewBinding>() {
     override fun createBinding(
         inflater: LayoutInflater,
         parent: ViewGroup,

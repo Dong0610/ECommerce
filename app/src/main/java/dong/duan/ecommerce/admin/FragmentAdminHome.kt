@@ -65,12 +65,8 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
         getAllProduct { list ->
             binding.rcvListSp.adapter = productAdapter
             productAdapter.setItems(list)
-
-            var count = 0
-            list.forEach { value ->
-                count += value.count
-            }
-            updateValue(count)
+            updateValue(list.size)
+            binding.rcvListSp
         }
 
 

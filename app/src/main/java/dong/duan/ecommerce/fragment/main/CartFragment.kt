@@ -12,9 +12,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import dong.duan.ecommerce.R
-import dong.duan.ecommerce.adapter.CardAdapter
-import dong.duan.ecommerce.adapter.OnCardEvent
-import dong.duan.ecommerce.databinding.FragmentCardBinding
+import dong.duan.ecommerce.adapter.user.CardAdapter
+import dong.duan.ecommerce.adapter.user.OnCardEvent
+import dong.duan.ecommerce.databinding.FragmentCartBinding
 import dong.duan.ecommerce.databinding.FragmentShipToBinding
 import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
 import dong.duan.ecommerce.dialog.DialogSuccess
@@ -34,15 +34,18 @@ import dong.duan.ecommerce.utility.Constant
 import dong.duan.ecommerce.utility.OrderStatus
 import java.util.Date
 
-class CartFragment : BaseFragment<FragmentCardBinding>() {
+class CartFragment : BaseFragment<FragmentCartBinding>() {
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCardBinding.inflate(layoutInflater)
+        FragmentCartBinding.inflate(layoutInflater)
 
     var listProduct = mutableListOf<CardProduct>()
 
     override fun initView() {
         getCartValue {
             listProduct.clear()
+            if(it.isNotEmpty()){
+                binding.llNoProduct.visibility= View.GONE
+            }
             listProduct = it
             initRcv(listProduct)
         }
@@ -55,6 +58,7 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
             override fun removeIndex(index: Int) {
                 listProduct.removeAt(index)
             }
+
             override fun onFinish() {
                 initRcv(listProduct)
             }
@@ -93,7 +97,7 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
 
     private fun onClick() {
         binding.btnCheckOut.setOnClickListener {
-            replaceFullViewFragment(PayAllProduct(listProductBuy), true)
+            addFragment(PayAllProduct(listProductBuy))
         }
     }
 
@@ -147,6 +151,23 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
         setToData(listProduct)
     }
 
+
+    private fun setToData(listProduct: MutableList<CardProduct>) {
+        var listPrData = listProduct
+        val listFavoriteID = MyDatabaseHelper().readFavorite()
+
+        if (listFavoriteID.size != 0) {
+            listFavoriteID.forEach { s ->
+                val productf = listPrData.find { it.productID == s }
+                if (productf != null) {
+                    val index = listPrData.indexOf(productf)
+                    listPrData.get(index).islove = true
+                }
+            }
+        }
+        setData(listPrData)
+    }
+
     private fun deleteLove(productID: String) {
         val listPrData = mutableListOf<CardProduct>()
         this.listProduct.forEach {
@@ -171,24 +192,6 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
                 setData(listPrData)
             }
     }
-
-    private fun setToData(listProduct: MutableList<CardProduct>) {
-        var listPrData = listProduct
-        val listFavoriteID = MyDatabaseHelper().readFavorite()
-
-        if (listFavoriteID.size != 0) {
-            listFavoriteID.forEach { s ->
-                val productf = listPrData.find { it.productID == s }
-                if (productf != null) {
-                    val index = listPrData.indexOf(productf)
-                    listPrData.get(index).islove = true
-                }
-            }
-        }
-        setData(listPrData)
-    }
-
-
     private fun addToLove(product: CardProduct) {
         val hasMap = HashMap<String, Any>()
         hasMap[Constant.LOVE_US_ID] = sharedPreferences.getString(Constant.USER_ID).toString()
@@ -401,7 +404,7 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
         }
     }
 
-    var address:Address ?=null
+    var address: Address? = null
 
     fun getData(callback: (MutableList<Address>?) -> Unit) {
         val listAddress = mutableListOf<Address>()
@@ -413,12 +416,12 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
                         snapshot.children.forEach {
                             val data = it.value as? HashMap<*, *>
                             val address = Address().apply {
-                                idAddress = data!!.keys.toString()
-                                remindName = data?.get(Constant.ADR_REMIND_NAME).toString() ?: ""
-                                receiverName = data?.get(Constant.ADR_US_NAME).toString() ?: ""
-                                location = data?.get(Constant.ADR_ADDRESS).toString() ?: ""
-                                phoneNumber = data?.get(Constant.ADR_F_PHONE).toString() ?: ""
-                                phoneNumber2 = data?.get(Constant.ADR_S_PHONE).toString() ?: ""
+                                idAddress = it.key.toString()
+                                remindName = data!!.get(Constant.ADR_REMIND_NAME).toString() ?: ""
+                                receiverName = data.get(Constant.ADR_US_NAME).toString() ?: ""
+                                location = data.get(Constant.ADR_ADDRESS).toString() ?: ""
+                                phoneNumber = data.get(Constant.ADR_F_PHONE).toString() ?: ""
+                                phoneNumber2 = data.get(Constant.ADR_S_PHONE).toString() ?: ""
                             }
                             listAddress.add(address)
                         }
@@ -443,16 +446,17 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
 
                 }).show()
             }
+            itembinding.txtAdrName.text= adress.remindName
             itembinding.txtAdrDetail.text = adress.location
             itembinding.txtNumPhone.text = adress.phoneNumber
             itembinding.btnEditAddress.setOnClickListener {
-
+                replaceFullViewFragment(FragmentEditAddress(adress),true)
             }
             itembinding.icDelete.visibility = View.GONE
 
             itembinding.root.setOnClickListener {
-                setBehaveButton(binding.btnCheckOut,true)
-                this.address=adress
+                setBehaveButton(binding.btnCheckOut, true)
+                this.address = adress
             }
         }
         binding.icBack.setOnClickListener {
@@ -475,11 +479,11 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
             hasmap[Constant.ORDER_PR_ID] = item.productID
             hasmap[Constant.ORDER_PR_NAME] = item.productName
             hasmap[Constant.ORDER_PR_COUNT] = item.nunCount
-            hasmap[Constant.ODR_ADR_REMIND_NAME]= address!!.remindName
-            hasmap[Constant.ODR_ADR_US_NAME]= address!!.receiverName
-            hasmap[Constant.ODR_ADR_ADDRESS]= address!!.location
-            hasmap[Constant.ODR_ADR_F_PHONE]= address!!.phoneNumber
-            hasmap[Constant.ODR_ADR_S_PHONE]= address!!.phoneNumber2
+            hasmap[Constant.ODR_ADR_REMIND_NAME] = address!!.remindName
+            hasmap[Constant.ODR_ADR_US_NAME] = address!!.receiverName
+            hasmap[Constant.ODR_ADR_ADDRESS] = address!!.location
+            hasmap[Constant.ODR_ADR_F_PHONE] = address!!.phoneNumber
+            hasmap[Constant.ODR_ADR_S_PHONE] = address!!.phoneNumber2
             hasmap[Constant.ORDER_PR_PRICE] = item.price
             hasmap[Constant.ORDRT_PR_IMG] = item.prductImg
             hasmap[Constant.ORDER_STATUS] = OrderStatus.WAIT_PROCESS

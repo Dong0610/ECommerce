@@ -1,6 +1,8 @@
 package dong.duan.ecommerce.fragment.other
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,10 @@ import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.databinding.FragmentUpdateProfileBinding
 import dong.duan.ecommerce.databinding.PopupChangeGentelBinding
 import dong.duan.ecommerce.library.PopUpLocation
+import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_popup_menu
+import dong.duan.ecommerce.library.show_toast
+import dong.duan.ecommerce.utility.Constant
 
 enum class UpdateType {
     UPDATE_NAME,
@@ -38,7 +43,8 @@ class UpdateProfileFragment(var updateType: UpdateType) :
 
             UpdateType.UPDATE_GENDER -> {
                 binding.llUpdateGentel.visibility = View.VISIBLE
-                binding.txtUpdateType.text = "Gender"
+                binding.txtUpdateType.text = "Giới tính"
+                binding.txtNewGentel.text = sharedPreferences.getString(Constant.USER_GENDER)
             }
 
             UpdateType.UPDATE_BIRTHDAY -> {
@@ -77,26 +83,55 @@ class UpdateProfileFragment(var updateType: UpdateType) :
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initUpdateBirthday() {
         binding.datePicker.setOnDateChangedListener { datePicker, year, monthOfYear, dayOfMonth ->
-            val formattedDate = String.format("%02d/%02d/%04d",dayOfMonth,monthOfYear + 1, year)
+            val formattedDate = String.format("%02d/%02d/%04d", dayOfMonth, monthOfYear + 1, year)
             binding.edtBirthday.setText(formattedDate)
         }
         binding.btnUpdateBirthday.setOnClickListener {
 
+            firestore.collection(Constant.KEY_USER)
+                .document(sharedPreferences.getString(Constant.USER_ID).toString())
+                .update(Constant.USER_BIRTHDAY, binding.edtBirthday.text.toString())
+                .addOnCompleteListener {
+                    sharedPreferences.putString(
+                        Constant.USER_PHONE,
+                        binding.edtBirthday.text.toString()
+                    )
+                    show_toast("Thành công")
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        closeFragment(this)
+                    }, 1500L)
+
+                }
         }
     }
 
     private fun initUpdatePhone() {
+        binding.edtNewPhone.setText(sharedPreferences.getString(Constant.USER_PHONE))
         binding.edtNewPhone.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llNewPhone)
+            txtFocus(b, null, binding.llNewPhone)
         }
-        binding.btnUpdateEmail.setOnClickListener {
-            binding.txtErrorEmail.text="We will send verification to your new phone number";
+        binding.btnUpdatePhone.setOnClickListener {
+            firestore.collection(Constant.KEY_USER)
+                .document(sharedPreferences.getString(Constant.USER_ID).toString())
+                .update(Constant.USER_PHONE, binding.edtNewPhone.text.toString())
+                .addOnCompleteListener {
+                    sharedPreferences.putString(
+                        Constant.USER_PHONE,
+                        binding.edtNewPhone.text.toString()
+                    )
+                    show_toast("Thành công")
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        closeFragment(this)
+                    }, 1500L)
+
+                }
         }
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initUpdateGentel() {
+        binding.txtNewGentel.text= sharedPreferences.getString(Constant.USER_GENDER).toString()
         binding.llNewGentel.setOnClickListener {
             binding.llNewGentel.post {
                 show_popup_menu(
@@ -121,46 +156,87 @@ class UpdateProfileFragment(var updateType: UpdateType) :
             }
         }
         binding.btnUpdateGentel.setOnClickListener {
+            firestore.collection(Constant.KEY_USER)
+                .document(sharedPreferences.getString(Constant.USER_ID).toString())
+                .update(Constant.USER_GENDER, binding.txtNewGentel.text.toString())
+                .addOnCompleteListener {
+                    sharedPreferences.putString(
+                        Constant.USER_GENDER,
+                        binding.txtNewGentel.text.toString()
+                    )
+                    show_toast("Thành công")
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        closeFragment(this)
+                    }, 1500L)
 
+                }
         }
     }
 
     private fun initUpdatePass() {
         binding.edtOldPass.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llOldPass)
+            txtFocus(b, null, binding.llOldPass)
         }
         binding.edtNewPass.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llNewPass)
+            txtFocus(b, null, binding.llNewPass)
         }
         binding.edtRenewPass.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llRenewPass)
+            txtFocus(b, null, binding.llRenewPass)
         }
-
         binding.btnUpdatePass.setOnClickListener {
+            val oldpass = sharedPreferences.getString(Constant.USER_PASS)
+            val passOldEnter = binding.edtOldPass.text.toString()
+            if (!oldpass.equals(passOldEnter)) {
+                show_toast("Mật khẩu cũ không đúng!")
+            } else {
+                firestore.collection(Constant.KEY_USER)
+                    .document(sharedPreferences.getString(Constant.USER_ID).toString())
+                    .update(Constant.USER_PASS, binding.edtNewPass.text.toString())
+                    .addOnCompleteListener {
+                        sharedPreferences.putString(
+                            Constant.USER_PASS,
+                            binding.edtNewPass.text.toString()
+                        )
+                        show_toast("Thành công")
+                        Handler(Looper.myLooper()!!).postDelayed({
+                            closeFragment(this)
+                        }, 1500L)
 
+                    }
+            }
         }
     }
 
     private fun initUpdateEmail() {
-        binding.edtNewEmail.setOnFocusChangeListener { view, b ->
-            txtFocus(b,binding.icMail2,binding.llnewEmail)
-        }
-        binding.btnUpdateEmail.setOnClickListener {
-            binding.txtErrorEmail.text="We will send verification to your new email";
-        }
-
-
+        binding.edtNewEmail.text = sharedPreferences.getString(Constant.USER_EMAIL, "").toString()
     }
 
     private fun initUpdateName() {
+
         binding.edtNewFirstName.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llnewFistName)
+            txtFocus(b, null, binding.llnewFistName)
         }
         binding.edtNewLastName.setOnFocusChangeListener { view, b ->
-            txtFocus(b,null,binding.llnewLastName)
+            txtFocus(b, null, binding.llnewLastName)
         }
         binding.btnUpdateName.setOnClickListener {
+            val name = binding.edtNewFirstName.text.toString()
+            val firstName = binding.edtNewLastName.text.toString()
+            if (name.equals("")) {
+                show_toast("Tên không được để trống")
+            } else {
+                firestore.collection(Constant.KEY_USER)
+                    .document(sharedPreferences.getString(Constant.USER_ID).toString())
+                    .update(Constant.USER_NAME, "${firstName} ${name}")
+                    .addOnCompleteListener {
+                        sharedPreferences.putString(Constant.USER_NAME, "${firstName} ${name}")
+                        show_toast("Sửa thông tin thành công")
+                        Handler(Looper.myLooper()!!).postDelayed({
+                            closeFragment(this)
+                        }, 1500L)
 
+                    }
+            }
         }
     }
 }

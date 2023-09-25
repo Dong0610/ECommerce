@@ -119,7 +119,6 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
-
     <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:background">
             @drawable/check_box_style

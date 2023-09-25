@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
-import dong.duan.ecommerce.adapter.HomeProductAdapter
-import dong.duan.ecommerce.adapter.OnProductSelected
-import dong.duan.ecommerce.adapter.OnSearchItem
-import dong.duan.ecommerce.adapter.SearchAdapter
+import dong.duan.ecommerce.adapter.user.HomeProductAdapter
+import dong.duan.ecommerce.adapter.user.OnProductSelected
+import dong.duan.ecommerce.adapter.user.OnSearchItem
+import dong.duan.ecommerce.adapter.user.SearchAdapter
 import dong.duan.ecommerce.databinding.FragmentExploxeBinding
 import dong.duan.ecommerce.databinding.ItemListCategoryBinding
 import dong.duan.ecommerce.fragment.other.ProductFragment
@@ -41,9 +41,8 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
             }
         }
 
-
         binding.icSearch.setOnClickListener {
-            val dataCurrenSreach = binding.edtSearchView.text.toString()
+            val dataCurrenSreach = binding.edtSearchData.text.toString()
             MyDatabaseHelper().insertCurrent(dataCurrenSreach)
             loadData()
             searchProduct(dataCurrenSreach)

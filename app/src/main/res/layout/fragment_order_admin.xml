@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/_6sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/customLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/txt_sum_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:fontFamily="@font/worksans_semi_bold"
+                android:text="Tất cả"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_3sdp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_sort_data"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_round_sort"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_value_sr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:fontFamily="@font/worksans_semi_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_sort_data"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <dong.duan.ecommerce.utility.CustomLinearLayout
+        android:id="@+id/customLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_5sdp">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:layout_marginBottom="@dimen/_1sdp">
+
+                        <dong.duan.ecommerce.utility.CustomLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cornerRadius="0dp"
+                            app:strokeColor="#ccc"
+                            app:strokeWidth="1sp">
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_52sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="STT"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_136sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã Order"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_137sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã sản phẩm"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_222sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Tên sản phẩm"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_136sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã khách hàng"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_220sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Tên khách hàng"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_183sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Điện thoại"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_250sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Địa chỉ"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Số lượng"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Giá"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_123sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Tình trạng"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+
+                        </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+                    </TableRow>
+                </TableLayout>
+            </ScrollView>
+        </HorizontalScrollView>
+
+
+    </dong.duan.ecommerce.utility.CustomLinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

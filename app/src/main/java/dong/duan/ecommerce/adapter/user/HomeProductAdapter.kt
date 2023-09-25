@@ -1,4 +1,4 @@
-package dong.duan.ecommerce.adapter
+package dong.duan.ecommerce.adapter.user
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
-import dong.duan.ecommerce.databinding.ItemFlashSaleViewBinding
 import dong.duan.ecommerce.databinding.ItemListProductViewBinding
 import dong.duan.ecommerce.model.Product
 

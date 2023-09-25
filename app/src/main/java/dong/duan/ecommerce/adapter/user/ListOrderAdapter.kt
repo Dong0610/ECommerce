@@ -1,4 +1,4 @@
-package dong.duan.ecommerce.adapter
+package dong.duan.ecommerce.adapter.user
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -28,8 +28,7 @@ class ListOrderAdapter(context: Context) : BaseAdapter<Order,ItemListOrderBindin
         binding.txtShipingCount.text= "${item.productCount} sản phẩm"
         var isDetail= true
         binding.txtUpDateTime.text= item.orderStatusTime
-
-        binding.root.setStrokeWidth(colorByStatus(item.orderStatus))
+        binding.root.setStrokeColor(colorByStatus(item.orderStatus))
 
         binding.icDetail.setOnClickListener {
 

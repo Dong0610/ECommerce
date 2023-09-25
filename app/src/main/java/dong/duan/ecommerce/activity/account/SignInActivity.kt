@@ -79,7 +79,6 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
                                     putBoolean(Constant.KEY_SHOP_INIT, true)
                                     putString(Constant.SHOP_ID, remoteShop.id)
                                     putString(Constant.SHOP_NAME,remoteShop.getString(Constant.SHOP_NAME))
-                                    putString(Constant.SHOP_ADDRESS,remoteShop.getString(Constant.SHOP_ADDRESS) )
                                     putString(Constant.USER_ADDRESS,remoteShop.getString(Constant.USER_ADDRESS) )
                                     putString(Constant.USER_PHONE,remoteShop.getString(Constant.USER_PHONE) )
                                     putString(Constant.SHOP_IMG_URL,remoteShop.getString(Constant.SHOP_IMG_URL) )

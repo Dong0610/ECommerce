@@ -29,7 +29,7 @@ fun statusByType(type: String): String {
         "PROCESSING" -> return "Đang xử lí"
         "WAIT_PROCESS" -> return "Chờ xử lí"
         "REJECT" -> return "Hủy đơn"
-        "RECEVIED" -> return "Đã nhận"
+        "RECEIVED" -> return "Đã nhận"
         "TRANSPORT" -> return "Vận chuyển"
         else -> return "Xảy ra lỗi"
     }
@@ -38,12 +38,12 @@ fun statusByType(type: String): String {
 
 fun colorByStatus(type: String): Int {
     return when (type) {
-        "PROCESSING" -> Color.parseColor("#FF5733") // Replace with the desired color code
-        "WAIT_PROCESS" -> Color.parseColor("#33FF57") // Replace with the desired color code
-        "REJECT" -> Color.parseColor("#5733FF") // Replace with the desired color code
-        "RECEIVED" -> Color.parseColor("#33FF99") // Replace with the desired color code
-        "TRANSPORT" -> Color.parseColor("#FF3399") // Replace with the desired color code
-        else -> Color.parseColor("#000000") // Default color if status doesn't match
+        "PROCESSING" -> Color.parseColor("#03A9F4") // Replace with the desired color code
+        "WAIT_PROCESS" -> Color.parseColor("#FF9800") // Replace with the desired color code
+        "REJECT" -> Color.parseColor("#FF0000") // Replace with the desired color code
+        "RECEIVED" -> Color.parseColor("#00FF19") // Replace with the desired color code
+        "TRANSPORT" -> Color.parseColor("#9C27B0") // Replace with the desired color code
+        else -> Color.parseColor("#d5d5d5") // Default color if status doesn't match
     }
 }
 

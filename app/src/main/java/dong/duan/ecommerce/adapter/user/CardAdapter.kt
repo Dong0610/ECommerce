@@ -1,16 +1,13 @@
-package dong.duan.ecommerce.adapter
+package dong.duan.ecommerce.adapter.user
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.databinding.ItemListCardViewBinding
-import dong.duan.ecommerce.library.log
 import dong.duan.ecommerce.model.CardProduct
-import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.utility.CheckBoxImageView
 
 class CardAdapter(var onCardEvent: OnCardEvent) :BaseAdapter<CardProduct,ItemListCardViewBinding>() {

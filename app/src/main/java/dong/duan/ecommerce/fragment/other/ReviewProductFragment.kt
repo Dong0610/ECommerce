@@ -3,18 +3,15 @@ package dong.duan.ecommerce.fragment.other
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
-import com.google.firebase.Timestamp
-import dong.duan.ecommerce.adapter.AllCommentAdapter
-import dong.duan.ecommerce.adapter.FilterComment
-import dong.duan.ecommerce.adapter.FilterCommentAdapter
-import dong.duan.ecommerce.adapter.OnFilterCommentSelect
+import dong.duan.ecommerce.adapter.user.AllCommentAdapter
+import dong.duan.ecommerce.adapter.user.FilterComment
+import dong.duan.ecommerce.adapter.user.FilterCommentAdapter
+import dong.duan.ecommerce.adapter.user.OnFilterCommentSelect
 import dong.duan.ecommerce.databinding.FragmentReviewProductBinding
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductReview
 import dong.duan.ecommerce.utility.Constant
-import dong.duan.ecommerce.utility.InitData
-import java.util.Date
 
 class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewProductBinding>() {
     override fun getBinding(
@@ -68,7 +65,7 @@ class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewPro
 
 
     private fun initRcv(reviews: MutableList<ProductReview>) {
-        binding.rcvColection.adapter=FilterCommentAdapter(object : OnFilterCommentSelect{
+        binding.rcvColection.adapter= FilterCommentAdapter(object : OnFilterCommentSelect {
             override fun onSelect(filterComment: FilterComment) {
 
             }
