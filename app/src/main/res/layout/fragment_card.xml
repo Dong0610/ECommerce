@@ -245,9 +245,8 @@
             android:background="@drawable/bg_btn_account_end"
             android:fontFamily="@font/worksans_semi_bold"
             android:paddingVertical="@dimen/_10sdp"
-            android:text="@string/check_out"
+            android:text="Tiếp tục"
             android:textAlignment="center"
-
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintBottom_toBottomOf="parent"

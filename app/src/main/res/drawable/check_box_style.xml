@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
-        <corners android:radius="@dimen/_3sdp"/>
-    <stroke android:color="@color/textcolor2" android:width="@dimen/_2sdp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/ic_check_box_blank"
+        android:state_checked="false"/>
+    <item android:drawable="@drawable/ic_round_check_box"
+        android:state_checked="true"/>
+    <item android:drawable="@drawable/ic_check_box_blank"/>
+</selector>

@@ -2,6 +2,8 @@ package dong.duan.ecommerce.fragment.main
 
 import android.annotation.SuppressLint
 import android.dongdong.kotlin_library.notification.show_notification
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +16,17 @@ import dong.duan.ecommerce.adapter.CardAdapter
 import dong.duan.ecommerce.adapter.OnCardEvent
 import dong.duan.ecommerce.databinding.FragmentCardBinding
 import dong.duan.ecommerce.databinding.FragmentShipToBinding
+import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
 import dong.duan.ecommerce.dialog.DialogSuccess
+import dong.duan.ecommerce.dialog.DialogWaring
+import dong.duan.ecommerce.fragment.other.FragmentEditAddress
 import dong.duan.ecommerce.fragment.other.ProductFragment
+import dong.duan.ecommerce.library.GenericAdapter
 import dong.duan.ecommerce.library.data.MyDatabaseHelper
 import dong.duan.ecommerce.library.formatTime
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
+import dong.duan.ecommerce.model.Address
 import dong.duan.ecommerce.model.CardProduct
 import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductSize
@@ -35,34 +42,43 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
 
     override fun initView() {
         getCartValue {
+            listProduct.clear()
             listProduct = it
             initRcv(listProduct)
         }
         onClick()
-        if(listProductBuy.size==0){
+        if (listProductBuy.size == 0) {
             setBehaveButton(false)
         }
+
+        PayAllProduct.onBuyProduct(object : PayAllProduct.OnRemoveItem {
+            override fun removeIndex(index: Int) {
+                listProduct.removeAt(index)
+            }
+            override fun onFinish() {
+                initRcv(listProduct)
+            }
+        })
     }
 
 
-
     @SuppressLint("ResourceAsColor")
-    fun setBehaveButton(value:Boolean= false){
-        if(value){
-            binding.btnCheckOut.isEnabled= true
+    fun setBehaveButton(value: Boolean = false) {
+        if (value) {
+            binding.btnCheckOut.isEnabled = true
             binding.btnCheckOut.setTextColor(R.color.white)
             binding.btnCheckOut.setBackgroundResource(R.drawable.bg_btn_account_end)
-        }else{
-            binding.btnCheckOut.isEnabled= false
+        } else {
+            binding.btnCheckOut.isEnabled = false
             binding.btnCheckOut.setTextColor(R.color.textcolor2)
             binding.btnCheckOut.setBackgroundResource(R.drawable.bg_edt_account_dis)
         }
     }
 
-    val listProductBuy= mutableListOf<CardProduct>()
+    val listProductBuy = mutableListOf<CardProduct>()
 
     private fun initTotal(listProduct: MutableList<CardProduct>) {
-        binding.llSumPay.visibility= View.VISIBLE
+        binding.llSumPay.visibility = View.VISIBLE
         binding.itemCount.text = listProduct.size.toString()
         binding.txtShipingCount.text = "0"
         binding.txtShipingVat.text = "0"
@@ -77,78 +93,25 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
 
     private fun onClick() {
         binding.btnCheckOut.setOnClickListener {
-            buyProduct(listProductBuy)
+            replaceFullViewFragment(PayAllProduct(listProductBuy), true)
         }
-    }
-    var curentShop = ""
-    private fun buyProduct(listProduct: MutableList<CardProduct>) {
-        curentShop = listProduct[0].productShopID
-        var custom_noti=0
-        listProduct.forEach { item ->
-            val time= Date()
-            custom_noti++
-            val hasmap = HashMap<String, Any>()
-            hasmap[Constant.ORDER_SHOP_ID] = item.productShopID
-            hasmap[Constant.ORDER_USER_ID] = sharedPreferences.getString(Constant.USER_ID).toString()
-            hasmap[Constant.ORDER_PR_ID] = item.productID
-            hasmap[Constant.ORDER_PR_NAME] = item.productName
-            hasmap[Constant.ORDER_PR_COUNT] = item.nunCount
-            hasmap[Constant.ORDER_PR_PRICE] = item.price
-            hasmap[Constant.ORDRT_PR_IMG]=item.prductImg
-            hasmap[Constant.ORDER_STATUS]= OrderStatus.WAIT_PROCESS
-            hasmap[Constant.ORDER_TIME] = time
-            hasmap[Constant.ORDER_STATUS_TIME]= time
-            firestore.collection(Constant.KEY_ORDER)
-                .add(hasmap)
-                .addOnCompleteListener{
-                    val notiHasmap = HashMap<String,Any>()
-                    notiHasmap[Constant.NOTI_VALUE] = "Đơn hàng được tạo thành công!"
-                    notiHasmap[Constant.NOTI_TIME]="Đơn hàng đã được tạo với mã: ${it.result.id} vào lúc ${formatTime(time)}"
-                    notiHasmap[Constant.NOTI_PR_ID]=item.productID
-
-                    database.getReference(Constant.KEY_NOTIFICATION)
-                        .child(hasmap.get(Constant.ORDER_USER_ID).toString())
-                        .push()
-                        .setValue(notiHasmap)
-                        .addOnCompleteListener{
-                            show_notification("Thông báo",notiHasmap.get(Constant.NOTI_TIME).toString(),R.mipmap.ic_sign_app,custom_noti)
-                            database.getReference(Constant.KEY_CART)
-                                .child(hasmap.get(Constant.ORDER_USER_ID).toString())
-                                .child(item.productID).removeValue()
-
-                            val index =
-                                listProduct.indexOf(listProduct.find { it.productID == item.productID })
-                            listProduct.removeAt(index)
-                            setData(listProduct)
-
-                        }.addOnFailureListener {
-                            show_notification("Thông báo","Xảy ra lỗi trong quá trình tạo đơn hàng!",R.mipmap.ic_sign_app,custom_noti)
-                        }
-                }
-                .addOnFailureListener { e->
-                    show_toast(e.message.toString() )
-                }
-        }
-        DialogSuccess(this.requireContext(), onBack = {
-
-        }).show()
     }
 
     var cardProductAdapter: CardAdapter? = null
     private fun initRcv(listProduct: MutableList<CardProduct>) {
         cardProductAdapter = CardAdapter(object : OnCardEvent {
             override fun onLove(product: CardProduct) {
-                if(!product.islove){
+                if (!product.islove) {
                     MyDatabaseHelper().insertFavorite(product.productID)
                     setToData(this@CartFragment.listProduct)
                     addToLove(product)
-                }
-                else{
+                } else {
                     MyDatabaseHelper().deleteFavorite(product.productID)
                     deleteLove(product.productID)
                     setToData(this@CartFragment.listProduct)
                 }
             }
+
             override fun onDelete(product: CardProduct) {
                 database.getReference(Constant.KEY_CART)
                     .child(sharedPreferences.getString(Constant.USER_ID).toString())
@@ -185,9 +148,9 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
     }
 
     private fun deleteLove(productID: String) {
-        val listPrData= mutableListOf<CardProduct>()
+        val listPrData = mutableListOf<CardProduct>()
         this.listProduct.forEach {
-            listPrData.add(it.apply { islove=false })
+            listPrData.add(it.apply { islove = false })
         }
         database.getReference(Constant.KEY_LOVE)
             .child(sharedPreferences.getString(Constant.USER_ID).toString())
@@ -196,12 +159,12 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
             .addOnCompleteListener {
                 show_toast("Đã xóa khỏi danh sách yêu thích!")
                 val listFavoriteID = MyDatabaseHelper().readFavorite()
-                if(listFavoriteID.size!=0){
-                    listFavoriteID.forEach{ s ->
-                        val productf= listPrData.find { it.productID==s }
-                        if (productf!=null){
-                            val index= listPrData.indexOf(productf)
-                            listPrData.get(index).islove=true
+                if (listFavoriteID.size != 0) {
+                    listFavoriteID.forEach { s ->
+                        val productf = listPrData.find { it.productID == s }
+                        if (productf != null) {
+                            val index = listPrData.indexOf(productf)
+                            listPrData.get(index).islove = true
                         }
                     }
                 }
@@ -210,15 +173,15 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
     }
 
     private fun setToData(listProduct: MutableList<CardProduct>) {
-        var listPrData= listProduct
+        var listPrData = listProduct
         val listFavoriteID = MyDatabaseHelper().readFavorite()
 
-        if(listFavoriteID.size!=0){
-            listFavoriteID.forEach{ s ->
-                val productf= listPrData.find { it.productID==s }
-                if (productf!=null){
-                    val index= listPrData.indexOf(productf)
-                    listPrData.get(index).islove=true
+        if (listFavoriteID.size != 0) {
+            listFavoriteID.forEach { s ->
+                val productf = listPrData.find { it.productID == s }
+                if (productf != null) {
+                    val index = listPrData.indexOf(productf)
+                    listPrData.get(index).islove = true
                 }
             }
         }
@@ -226,8 +189,7 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
     }
 
 
-
-    private fun addToLove(product:CardProduct) {
+    private fun addToLove(product: CardProduct) {
         val hasMap = HashMap<String, Any>()
         hasMap[Constant.LOVE_US_ID] = sharedPreferences.getString(Constant.USER_ID).toString()
         hasMap[Constant.LOVE_USER_NAME] = sharedPreferences.getString(Constant.USER_NAME).toString()
@@ -235,7 +197,7 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
         hasMap[Constant.LOVE_PRODUCT_IMG] = product.prductImg
         hasMap[Constant.LOVE_PRODUCT_NAME] = product.productName
         hasMap[Constant.LOVE_PRODUCT_SHOP_ID] = product.productShopID
-        hasMap[Constant.LOVE_PRODUCT_PRICE] =product.price
+        hasMap[Constant.LOVE_PRODUCT_PRICE] = product.price
         hasMap[Constant.LOVE_PRODUCT_ISBUY] = true
         hasMap[Constant.LOVE_PRODUCT_COUNT] = 1
         database.getReference(Constant.KEY_LOVE)
@@ -250,23 +212,24 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
     }
 
     private fun addDataToBuy(product: CardProduct) {
-        if(listProductBuy.size==0){
+        if (listProductBuy.size == 0) {
+
             listProductBuy.add(product)
-        }
-        else{
-            val indexPr= listProductBuy.indexOf(product)
-            if(indexPr==-1){
+            setBehaveButton(true)
+        } else {
+
+            val indexPr = listProductBuy.indexOf(product)
+            if (indexPr == -1) {
                 listProductBuy.add(product)
-            }
-            else{
+            } else {
                 listProductBuy.removeAt(indexPr)
             }
-        }
-        if(listProductBuy.size==0){
-            setBehaveButton(false)
-        }
-        else{
-            setBehaveButton(true)
+
+            if (listProductBuy.size == 0) {
+                setBehaveButton(false)
+            } else {
+                setBehaveButton(true)
+            }
         }
 
         initTotal(listProductBuy)
@@ -331,6 +294,7 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
             }
     }
 
+
     private fun setData(listProduct: MutableList<CardProduct>) {
         cardProductAdapter?.setItems(listProduct)
     }
@@ -385,58 +349,189 @@ class CartFragment : BaseFragment<FragmentCardBinding>() {
 
 }
 
-class PayAllProduct(var sumMoney: Float) : BaseFragment<FragmentShipToBinding>() {
+class PayAllProduct(var listProduct: MutableList<CardProduct>) :
+    BaseFragment<FragmentShipToBinding>() {
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentShipToBinding.inflate(layoutInflater)
 
-    var Value_Start = 1
-    override fun initView() {
-
-        caseView(1)
-
-        binding.btnContinue.setOnClickListener {
-            Value_Start += 1
-            if (Value_Start > 3) {
-                DialogSuccess(this.requireContext(),
-                    {
-                        this.closeFragment(this)
-                    }
-                ).show()
-            } else {
-                caseView(Value_Start)
-            }
+    companion object {
+        private var onRemoveItem: OnRemoveItem? = null
+        fun onBuyProduct(onRemoveItem: OnRemoveItem) {
+            this.onRemoveItem = onRemoveItem
         }
-
     }
 
-    fun caseView(value: Int) {
-        when (value) {
-            1 -> {
-                binding.rcvListAdress.visibility = View.VISIBLE
-                binding.llChoosePayment.visibility = View.GONE
-                binding.rcvListCard.visibility = View.GONE
-                binding.icAddAdress.visibility = View.VISIBLE
-                binding.btnContinue.text = requireContext().getString(R.string.next)
-            }
+    @SuppressLint("ResourceAsColor")
+    fun setBehaveButton(value: Boolean = false) {
+        if (value) {
+            binding.btnCheckOut.isEnabled = true
+            binding.btnCheckOut.setTextColor(R.color.white)
+            binding.btnCheckOut.setBackgroundResource(R.drawable.bg_btn_account_end)
+        } else {
+            binding.btnCheckOut.isEnabled = false
+            binding.btnCheckOut.setTextColor(R.color.textcolor2)
+            binding.btnCheckOut.setBackgroundResource(R.drawable.bg_edt_account_dis)
+        }
+    }
 
-            2 -> {
-                binding.rcvListAdress.visibility = View.GONE
-                binding.llChoosePayment.visibility = View.VISIBLE
-                binding.rcvListCard.visibility = View.GONE
-                binding.icAddAdress.visibility = View.GONE
-                binding.btnContinue.text = requireContext().getString(R.string.next)
-            }
+    interface OnRemoveItem {
+        fun removeIndex(index: Int)
+        fun onFinish()
+    }
 
-            3 -> {
-                binding.rcvListAdress.visibility = View.GONE
-                binding.llChoosePayment.visibility = View.GONE
-                binding.rcvListCard.visibility = View.VISIBLE
-                binding.icAddAdress.visibility = View.VISIBLE
-                binding.btnContinue.text = "$$sumMoney"
+    override fun initView() {
+        setBehaveButton(binding.btnCheckOut)
+        binding.btnCheckOut.setOnClickListener {
+            buyProduct(listProduct)
+        }
+        binding.icBack.setOnClickListener {
+            closeFragment(this@PayAllProduct)
+        }
+        setBehaveButton()
+        binding.icAddAdress.setOnClickListener {
+            replaceFullViewFragment(FragmentEditAddress(null), true)
+        }
+
+        getData { it ->
+            if (it != null) {
+                inittoRcv(it)
             }
         }
+    }
+
+    var address:Address ?=null
+
+    fun getData(callback: (MutableList<Address>?) -> Unit) {
+        val listAddress = mutableListOf<Address>()
+        database.getReference(Constant.KEY_ADDRESS)
+            .child(sharedPreferences.getString(Constant.USER_ID).toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        snapshot.children.forEach {
+                            val data = it.value as? HashMap<*, *>
+                            val address = Address().apply {
+                                idAddress = data!!.keys.toString()
+                                remindName = data?.get(Constant.ADR_REMIND_NAME).toString() ?: ""
+                                receiverName = data?.get(Constant.ADR_US_NAME).toString() ?: ""
+                                location = data?.get(Constant.ADR_ADDRESS).toString() ?: ""
+                                phoneNumber = data?.get(Constant.ADR_F_PHONE).toString() ?: ""
+                                phoneNumber2 = data?.get(Constant.ADR_S_PHONE).toString() ?: ""
+                            }
+                            listAddress.add(address)
+                        }
+                        callback(listAddress)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(null)
+                }
+            })
+    }
+
+    var listadapter: GenericAdapter<Address, ItemShiptoAdressViewBinding>? = null
+    fun inittoRcv(listAddress: MutableList<Address>) {
+        listadapter = GenericAdapter(
+            listAddress,
+            ItemShiptoAdressViewBinding::inflate
+        ) { itembinding, adress, i ->
+            itembinding.icDelete.setOnClickListener {
+                DialogWaring("Are you sure wanna delete address", requireContext(), {
+
+                }).show()
+            }
+            itembinding.txtAdrDetail.text = adress.location
+            itembinding.txtNumPhone.text = adress.phoneNumber
+            itembinding.btnEditAddress.setOnClickListener {
+
+            }
+            itembinding.icDelete.visibility = View.GONE
+
+            itembinding.root.setOnClickListener {
+                setBehaveButton(binding.btnCheckOut,true)
+                this.address=adress
+            }
+        }
+        binding.icBack.setOnClickListener {
+            closeFragment(this)
+        }
+        binding.rcvListAdress.adapter = listadapter
+    }
+
+    private var curentShop = ""
+    private fun buyProduct(listProduct: MutableList<CardProduct>) {
+        curentShop = listProduct[0].productShopID
+        var custom_noti = 0
+        listProduct.forEach { item ->
+            val time = Date()
+            custom_noti++
+            val hasmap = HashMap<String, Any>()
+            hasmap[Constant.ORDER_SHOP_ID] = item.productShopID
+            hasmap[Constant.ORDER_USER_ID] =
+                sharedPreferences.getString(Constant.USER_ID).toString()
+            hasmap[Constant.ORDER_PR_ID] = item.productID
+            hasmap[Constant.ORDER_PR_NAME] = item.productName
+            hasmap[Constant.ORDER_PR_COUNT] = item.nunCount
+            hasmap[Constant.ODR_ADR_REMIND_NAME]= address!!.remindName
+            hasmap[Constant.ODR_ADR_US_NAME]= address!!.receiverName
+            hasmap[Constant.ODR_ADR_ADDRESS]= address!!.location
+            hasmap[Constant.ODR_ADR_F_PHONE]= address!!.phoneNumber
+            hasmap[Constant.ODR_ADR_S_PHONE]= address!!.phoneNumber2
+            hasmap[Constant.ORDER_PR_PRICE] = item.price
+            hasmap[Constant.ORDRT_PR_IMG] = item.prductImg
+            hasmap[Constant.ORDER_STATUS] = OrderStatus.WAIT_PROCESS
+            hasmap[Constant.ORDER_TIME] = time
+            hasmap[Constant.ORDER_STATUS_TIME] = time
+            firestore.collection(Constant.KEY_ORDER)
+                .add(hasmap)
+                .addOnCompleteListener {
+                    val notiHasmap = HashMap<String, Any>()
+                    notiHasmap[Constant.NOTI_VALUE] = "Đơn hàng được tạo thành công!"
+                    notiHasmap[Constant.NOTI_TIME] =
+                        "Đơn hàng đã được tạo với mã: ${it.result.id} vào lúc ${formatTime(time)}"
+                    notiHasmap[Constant.NOTI_PR_ID] = item.productID
+
+                    database.getReference(Constant.KEY_NOTIFICATION)
+                        .child(hasmap.get(Constant.ORDER_USER_ID).toString())
+                        .push()
+                        .setValue(notiHasmap)
+                        .addOnCompleteListener {
+                            show_notification(
+                                "Thông báo",
+                                notiHasmap.get(Constant.NOTI_TIME).toString(),
+                                R.mipmap.ic_sign_app,
+                                custom_noti
+                            )
+                            database.getReference(Constant.KEY_CART)
+                                .child(hasmap.get(Constant.ORDER_USER_ID).toString())
+                                .child(item.productID).removeValue()
+
+                            val index =
+                                listProduct.indexOf(listProduct.find { it.productID == item.productID })
+                            onRemoveItem?.removeIndex(index)
+
+                        }.addOnFailureListener {
+                            show_notification(
+                                "Thông báo",
+                                "Xảy ra lỗi trong quá trình tạo đơn hàng!",
+                                R.mipmap.ic_sign_app,
+                                custom_noti
+                            )
+                        }
+                }
+                .addOnFailureListener { e ->
+                    show_toast(e.message.toString())
+                }
+            onRemoveItem?.onFinish()
+        }
+        DialogSuccess(this.requireContext(), onBack = {
+            Handler(Looper.myLooper()!!).postDelayed({
+                this.closeFragment(this@PayAllProduct)
+            }, 1500L)
+        }).show()
     }
 }
 

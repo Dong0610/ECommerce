@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.adapter.AllCommentAdapter
-import dong.duan.ecommerce.adapter.FilterComment
-import dong.duan.ecommerce.adapter.FilterCommentAdapter
-import dong.duan.ecommerce.adapter.OnFilterCommentSelect
 import dong.duan.ecommerce.adapter.SlideShowAdapter
 import dong.duan.ecommerce.databinding.FragmentProductDetailBinding
 import dong.duan.ecommerce.databinding.ItemListProductSizeBinding

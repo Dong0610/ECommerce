@@ -103,10 +103,11 @@
     <string name="order_at_e_comm_august_1_2017">Đặt hàng tại E-comm : 1 tháng 8, 2017</string>
     <string name="confirmation">Xác nhận</string>
     <string name="add_address">Thêm địa chỉ</string>
-    <string name="street_address">Địa chỉ đường</string>
+    <string name="street_address">Địa chỉ</string>
     <string name="enter_card_number">Nhập số thẻ</string>
     <string name="expiration_date">Ngày hết hạn</string>
     <string name="security_code">Mã bảo mật</string>
     <string name="enter_card_holder">Nhập chủ thẻ</string>
     <string name="enter_banking_name">Nhập tên ngân hàng</string>
+    <string name="ch_n_a_ch">Chọn địa chỉ</string>
 </resources>

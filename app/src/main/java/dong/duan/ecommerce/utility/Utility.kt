@@ -1,13 +1,19 @@
 package dong.duan.ecommerce.utility
 
+
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import dong.duan.ecommerce.R
+
 
 enum class OrderStatus {
     PROCESSING,
@@ -46,7 +52,8 @@ class CustomLinearLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var cornerRadius: Float = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._5sdp).toFloat()
+    private var cornerRadius: Float =
+        resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._5sdp).toFloat()
     private var strokeColor: Int = ContextCompat.getColor(context, R.color.textcolor2)
     private var strokeWidth: Int = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._1sdp)
     private var gradientColors: IntArray? = null
@@ -59,7 +66,10 @@ class CustomLinearLayout @JvmOverloads constructor(
             strokeColor =
                 typedArray.getColor(R.styleable.CustomLinearLayout_strokeColor, strokeColor)
             strokeWidth =
-                typedArray.getDimensionPixelSize(R.styleable.CustomLinearLayout_strokeWidth, strokeWidth)
+                typedArray.getDimensionPixelSize(
+                    R.styleable.CustomLinearLayout_strokeWidth,
+                    strokeWidth
+                )
             gradientColors = typedArray.getResourceId(
                 R.styleable.CustomLinearLayout_gradientColors,
                 0
@@ -121,7 +131,8 @@ class CustomConstrainLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var cornerRadius: Float = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._5sdp).toFloat()
+    private var cornerRadius: Float =
+        resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._5sdp).toFloat()
     private var strokeColor: Int = ContextCompat.getColor(context, R.color.textcolor2)
     private var strokeWidth: Int = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._1sdp)
     private var gradientColors: IntArray? = null
@@ -134,7 +145,10 @@ class CustomConstrainLayout @JvmOverloads constructor(
             strokeColor =
                 typedArray.getColor(R.styleable.CustomLinearLayout_strokeColor, strokeColor)
             strokeWidth =
-                typedArray.getDimensionPixelSize(R.styleable.CustomLinearLayout_strokeWidth, strokeWidth)
+                typedArray.getDimensionPixelSize(
+                    R.styleable.CustomLinearLayout_strokeWidth,
+                    strokeWidth
+                )
             gradientColors = typedArray.getResourceId(
                 R.styleable.CustomLinearLayout_gradientColors,
                 0
@@ -188,5 +202,63 @@ class CustomConstrainLayout @JvmOverloads constructor(
             backgroundDrawable?.gradientType = GradientDrawable.LINEAR_GRADIENT
             backgroundDrawable?.colors = gradientColors
         }
+    }
+}
+
+
+class CheckBoxImageView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatImageView(context, attrs, defStyleAttr) {
+
+    private var checked = false
+    private var defImageRes = 0
+    private var checkedImageRes = 0
+    private var onCheckedChangeListener: OnCheckedChangeListener? = null
+
+    init {
+        init(attrs, defStyleAttr)
+        this.setOnClickListener {
+            onClick()
+        }
+    }
+
+     fun isChecked(): Boolean {
+        return checked
+    }
+
+     fun setChecked(checked: Boolean) {
+        this.checked = checked // Use "=" instead of "!="
+        setImageResource(if (isChecked()) checkedImageRes else defImageRes)
+    }
+
+    @SuppressLint("ResourceType")
+    private fun init(attributeSet: AttributeSet?, defStyle: Int) {
+        val a = context.obtainStyledAttributes(
+            attributeSet,
+            R.styleable.CheckBoxImageView,
+            defStyle,
+            0
+        )
+        defImageRes = a.getResourceId(R.styleable.CheckBoxImageView_default_img, 0)
+        checkedImageRes = a.getResourceId(R.styleable.CheckBoxImageView_checked_img, 0)
+        checked = a.getBoolean(R.styleable.CheckBoxImageView_checked, false)
+        setImageResource(if (isChecked()) checkedImageRes else defImageRes)
+        a.recycle()
+    }
+
+    private fun onClick() {
+        checked = !checked
+        setChecked(checked)
+        onCheckedChangeListener?.onCheckedChanged(this, checked)
+    }
+
+    fun setOnCheckedChangeListener(onCheckedChangeListener: OnCheckedChangeListener?) {
+        this.onCheckedChangeListener = onCheckedChangeListener
+    }
+
+    interface OnCheckedChangeListener {
+        fun onCheckedChanged(buttonView: View?, isChecked: Boolean)
     }
 }

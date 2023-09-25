@@ -21,8 +21,11 @@ class FlashSaleAdapter(var context:Context,var onItemSelected: OnItemSelected):B
         binding.txtPrice.text = "${item.price}$"
         binding.txtDiscount.text= "${item.price-(item.price*(item.saleOff/100))}$"
         binding.txtSale.text="${item.saleOff}%"
+        binding.root.setOnClickListener {
+            onItemSelected.onItemSelect(product = item)
+        }
     }
 }
 interface OnItemSelected{
-    fun onItemSelect()
+    fun onItemSelect(product: Product)
 }

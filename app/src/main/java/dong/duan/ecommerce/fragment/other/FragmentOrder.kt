@@ -54,6 +54,12 @@ class FragmentOrder : BaseFragment<FragmentYourOrderBinding>() {
                             orderStatus = item.getString(Constant.ORDER_STATUS) ?:"" // Assuming OrderStatus is an enum or a constant
                             orderTime = item.getDate(Constant.ORDER_TIME).toString() ?: ""
                             orderStatusTime = item.getDate(Constant.ORDER_STATUS_TIME).toString() ?: ""
+                            remindName = item.getString(Constant.ODR_ADR_REMIND_NAME).toString() ?:""
+                            receiverName = item.getString(Constant.ODR_ADR_US_NAME).toString() ?:""
+                            location = item.getString(Constant.ODR_ADR_ADDRESS).toString() ?:""
+                            phoneNumber = item.getString(Constant.ODR_ADR_F_PHONE).toString() ?:""
+                            phoneNumber2 = item.getString(Constant.ODR_ADR_S_PHONE).toString() ?:""
+
                         }
                         listData.add(order)
                     }

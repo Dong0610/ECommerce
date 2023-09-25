@@ -1,5 +1,6 @@
 package com.egame.backgrounderaser.aigenerator.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -78,6 +79,19 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = getBinding(inflater, container)
         return binding.root
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun setBehaveButton(btnCheckOut:TextView,value: Boolean = false) {
+        if (value) {
+            btnCheckOut.isEnabled = true
+            btnCheckOut.setTextColor(R.color.white)
+            btnCheckOut.setBackgroundResource(R.drawable.bg_btn_account_end)
+        } else {
+            btnCheckOut.isEnabled = false
+            btnCheckOut.setTextColor(R.color.textcolor2)
+            btnCheckOut.setBackgroundResource(R.drawable.bg_edt_account_dis)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

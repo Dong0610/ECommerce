@@ -23,11 +23,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), SearchManufactData {
     override fun createView() {
         openFragment(HomeFragment(), true)
         binding.bottomNavigation.setOnItemSelectedListener(OnItemSelectedBottomBar)
-        binding.edtSearch.setOnFocusChangeListener(object :OnFocusChangeListener{
-            override fun onFocusChange(p0: View?, p1: Boolean) {
-                openFragment(SearchFragment())
-            }
-        })
+        binding.edtSearch.setOnFocusChangeListener { p0, p1 -> openFragment(SearchFragment()) }
         binding.icFavorite.setOnClickListener {
             replaceFragment(FavoriteFragment(), addToBackStack = true)
         }

@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/worksans_bold"
-                android:text="Remind name"
+                android:text="Tên gợi nhớ"
                 android:textColor="#223263"
                 android:textSize="@dimen/_13sdp" />
 
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/worksans_bold"
-                android:text="Receiver name"
+                android:text="Tên người nhận"
                 android:textColor="#223263"
                 android:textSize="@dimen/_13sdp" />
 
@@ -200,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/worksans_bold"
-                android:text="First phone number"
+                android:text="Số điện thoại 1"
                 android:textColor="#223263"
                 android:textSize="@dimen/_13sdp" />
 
@@ -241,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/worksans_bold"
-                android:text="Second phone number"
+                android:text="Số điện thoại 2"
                 android:textColor="#223263"
                 android:textSize="@dimen/_13sdp" />
 
@@ -273,7 +273,7 @@
 
     </androidx.core.widget.NestedScrollView>
     <TextView
-        android:id="@+id/btn_update_email"
+        android:id="@+id/btn_save_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_12sdp"

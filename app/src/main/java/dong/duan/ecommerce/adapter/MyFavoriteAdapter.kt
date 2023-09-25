@@ -19,13 +19,13 @@ class MyFavoriteAdapter(var context:Context,var onItemSelected: OnFavoriteSelect
 
     override fun bind(binding: ItemListFavoriteViewBinding, item: Product, position: Int) {
         binding.txtName.setText(item.name)
-        Glide.with(context).load(item.imageUrl).into(binding.imgProduct)
+        Glide.with(context).load(item.imageUrl!!.get(0)).into(binding.imgProduct)
         binding.txtPrice.text = "${item.price}$"
         binding.rating.numStars= item.star
         binding.txtDiscount.text= "${item.price-(item.price*(item.saleOff/100))}$"
         binding.txtSale.text="${item.saleOff}%"
         binding.icdelete.setOnClickListener {
-            onItemSelected.onDeletet(item)
+            onItemSelected.onDelete(item)
         }
         binding.root.setOnClickListener {
             onItemSelected.onItemSelect(item)
@@ -34,5 +34,5 @@ class MyFavoriteAdapter(var context:Context,var onItemSelected: OnFavoriteSelect
 }
 interface OnFavoriteSelected{
     fun onItemSelect(product: Product)
-    fun onDeletet(product: Product)
+    fun onDelete(product: Product)
 }

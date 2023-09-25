@@ -1,6 +1,7 @@
 package dong.duan.ecommerce.fragment.other
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.databinding.FragmentAdressBinding
@@ -26,10 +27,11 @@ class FragmentAddress : BaseFragment<FragmentAdressBinding>() {
                 }).show()
             }
             itembinding.txtAdrDetail.text=adress.location
-            itembinding.txtNumPhone.text=adress.phoneNunber
+            itembinding.txtNumPhone.text=adress.phoneNumber
             itembinding.btnEditAddress.setOnClickListener {
                 updateAddress(adress)
             }
+            itembinding.icDelete.visibility=View.GONE
         }
         binding.icBack.setOnClickListener {
             closeFragment(this)

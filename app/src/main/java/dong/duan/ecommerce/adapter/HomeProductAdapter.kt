@@ -1,5 +1,6 @@
 package dong.duan.ecommerce.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class HomeProductAdapter(var context: Context, var onItemSelected: OnProductSele
         viewType: Int
     ) = ItemListProductViewBinding.inflate(inflater, parent, false)
 
+    @SuppressLint("SetTextI18n")
     override fun bind(binding: ItemListProductViewBinding, item: Product, position: Int) {
         binding.txtName.setText(item.name)
         Glide.with(context).load(item.imageUrl!!.get(0)).into(binding.imgProduct)

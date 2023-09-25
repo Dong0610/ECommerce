@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_update_email"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">

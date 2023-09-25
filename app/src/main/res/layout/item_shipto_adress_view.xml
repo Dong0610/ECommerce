@@ -26,7 +26,7 @@
         android:id="@+id/txt_adr_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_6sdp"
+        android:layout_marginHorizontal="@dimen/_6sdp"
         android:fontFamily="@font/worksans_medium"
         android:text="@string/write_review"
         android:textColor="@color/textcolor2"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -63,7 +63,7 @@
             android:background="@drawable/bg_btn_account_end"
             android:fontFamily="@font/worksans_semi_bold"
             android:paddingHorizontal="@dimen/_12sdp"
-            android:paddingVertical="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_4sdp"
             android:text="@string/edit"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -76,6 +76,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_24sdp"
             android:id="@+id/ic_delete"
+            android:padding="@dimen/_3sdp"
             android:src="@drawable/ic_round_delete_outline"
             android:layout_width="@dimen/_28sdp"
             android:layout_height="@dimen/_28sdp"/>

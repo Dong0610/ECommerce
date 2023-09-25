@@ -7,14 +7,17 @@
     android:background="@drawable/bg_edt_account_dis"
     android:orientation="horizontal">
 
-
-    <CheckBox
+    <dong.duan.ecommerce.utility.CheckBoxImageView
+        android:padding="@dimen/_3sdp"
+        app:checked_img="@drawable/ic_check_true"
+        app:default_img="@drawable/ic_check_false"
+        app:checked="false"
         android:id="@+id/checkbox_buy"
         android:layout_width="@dimen/_18sdp"
         android:layout_height="@dimen/_18sdp"
-        android:button="?android:attr/listChoiceIndicatorMultiple"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true" />
 
 
     <com.google.android.material.imageview.ShapeableImageView

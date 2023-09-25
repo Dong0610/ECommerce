@@ -79,6 +79,11 @@ object Constant {
     var ORDER_PR_COUNT="order_product_count"
     var ORDER_PR_PRICE= "order_product_price"
     var ORDRT_PR_IMG= "order_product_img"
+    var ODR_ADR_REMIND_NAME="order_address_rm_name"
+    var ODR_ADR_US_NAME="order_address_us_name"
+    var ODR_ADR_ADDRESS="order_address_value"
+    var ODR_ADR_F_PHONE="order_address_first_num"
+    var ODR_ADR_S_PHONE="order_address_second_num"
     var ORDER_STATUS ="order_status"
     var ORDER_TIME="order_time"
     var ORDER_STATUS_TIME="order_status_time"
@@ -116,6 +121,15 @@ object Constant {
     val LOVE_PRODUCT_ISBUY= "love_pr_buy"
     val LOVE_PRODUCT_SHOP_ID ="love_shop_id"
 
+
+
+    val KEY_ADDRESS = "Address"
+    var ADR_ID="address_id"
+    var ADR_REMIND_NAME="address_rm_name"
+    var ADR_US_NAME="address_us_name"
+    var ADR_ADDRESS="address_value"
+    var ADR_F_PHONE="address_first_num"
+    var ADR_S_PHONE="address_second_num"
 
 }
 

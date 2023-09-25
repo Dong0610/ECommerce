@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_6sdp"
             android:fontFamily="@font/worksans_bold"
-            android:text="@string/write_review"
+            android:text="@string/ch_n_a_ch"
             android:textColor="#223263"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,136 +61,25 @@
         android:id="@+id/rcv_list_adress"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:listitem="@layout/item_shipto_adress_view"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_margin="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
+        app:layout_constraintBottom_toTopOf="@+id/btn_check_out"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_list_card"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        tools:listitem="@layout/item_list_credit_card"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_margin="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
 
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/llChoosePayment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintTop_toBottomOf="@+id/view">
-
-        <LinearLayout
-            android:paddingVertical="@dimen/_6sdp"
-            android:orientation="horizontal"
-            android:id="@+id/id_credit_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/ic_credit_card"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"/>
-            <TextView
-                android:layout_marginStart="@dimen/_6sdp"
-                android:text="@string/credit_card_or_debit"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_13sdp"
-                android:textColor="@color/textcolor"
-                android:fontFamily="@font/worksans_semi_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="@dimen/_6sdp"
-            android:orientation="horizontal"
-            android:id="@+id/id_paypal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/ic_paypal"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"/>
-            <TextView
-                android:layout_marginStart="@dimen/_6sdp"
-                android:text="@string/paypal"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_13sdp"
-                android:textColor="@color/textcolor"
-                android:fontFamily="@font/worksans_semi_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="@dimen/_6sdp"
-            android:orientation="horizontal"
-            android:id="@+id/id_bank_trasnfer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/ic_bank_transfer"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"/>
-            <TextView
-                android:layout_marginStart="@dimen/_6sdp"
-                android:text="@string/bank_transfer"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_13sdp"
-                android:textColor="@color/textcolor"
-                android:fontFamily="@font/worksans_semi_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="@dimen/_6sdp"
-            android:orientation="horizontal"
-            android:id="@+id/id_pay_money"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/ic_round_money"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"/>
-            <TextView
-                android:layout_marginStart="@dimen/_6sdp"
-                android:text="@string/payment_on_delivery"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_13sdp"
-                android:textColor="@color/textcolor"
-                android:fontFamily="@font/worksans_semi_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-    </LinearLayout>
 
 
     <TextView
-        android:id="@+id/btn_continue"
+        android:id="@+id/btn_check_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_btn_account_end"
         android:fontFamily="@font/worksans_semi_bold"
         android:paddingVertical="@dimen/_10sdp"
-        android:text="@string/next"
+        android:text="Thanh toán"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:layout_margin="@dimen/_12sdp"

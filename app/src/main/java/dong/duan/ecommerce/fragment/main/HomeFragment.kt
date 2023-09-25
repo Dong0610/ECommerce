@@ -15,6 +15,7 @@ import dong.duan.ecommerce.databinding.FragmentHomeBinding
 import dong.duan.ecommerce.databinding.ItemListCategoryBinding
 import dong.duan.ecommerce.fragment.other.ProductFragment
 import dong.duan.ecommerce.fragment.other.SlideBannerFragment
+import dong.duan.ecommerce.interfaces.FetchAllData
 import dong.duan.ecommerce.interfaces.SearchManufactData
 import dong.duan.ecommerce.library.GenericAdapter
 import dong.duan.ecommerce.library.sharedPreferences
@@ -36,6 +37,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         fun searchByManufact(homeSearch:SearchManufactData) {
           this.homeSearch= homeSearch
         }
+        var listFetchAllData = mutableListOf<Product>()
     }
 
     private var listFragmentBanner = arrayListOf<BaseFragment<*>>()
@@ -63,9 +65,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         getAllProduct { products ->
+
             listFlasShale(products)
             listMegaSale(products)
             loadProduct(products)
+           listFetchAllData = products
         }
     }
 
@@ -90,8 +94,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
         val megaSaleAdapter = FlashSaleAdapter(requireContext(), object : OnItemSelected {
-            override fun onItemSelect() {
-
+            override fun onItemSelect(product:Product) {
+                replaceFullViewFragment(ProductFragment(product), true)
             }
         })
         binding.rcvMegaSale.adapter = megaSaleAdapter
@@ -106,8 +110,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
         val flashSaleAdapter = FlashSaleAdapter(requireContext(), object : OnItemSelected {
-            override fun onItemSelect() {
-
+            override fun onItemSelect(product: Product) {
+                replaceFullViewFragment(ProductFragment(product), true)
             }
         })
         binding.rcvFlashsale.adapter = flashSaleAdapter
@@ -194,7 +198,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     show_toast("Error: ${task.exception?.message}")
                 }
             }
-
     }
 
     private fun loadRecyview() {
