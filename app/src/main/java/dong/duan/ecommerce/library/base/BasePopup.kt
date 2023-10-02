@@ -58,7 +58,9 @@ class BasePopupLocation<T : ViewBinding>(
     private val bindingInflater: (LayoutInflater) -> T,
     private val x: Int,
     private val y: Int,
-    var callback: (T,PopupWindow) -> Unit
+    private val width: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
+    private val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
+    var callback: (T, PopupWindow) -> Unit
 ) : PopupWindow(context) {
 
     private lateinit var popupWindow: PopupWindow
@@ -75,11 +77,11 @@ class BasePopupLocation<T : ViewBinding>(
 
         popupWindow = PopupWindow(
             rootView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            width,
+            height,
             true
         )
-        callback(itemBinding,popupWindow)
+        callback(itemBinding, popupWindow)
     }
 
     fun show() {

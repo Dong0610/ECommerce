@@ -28,7 +28,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), SearchManufactData {
             replaceFragment(FavoriteFragment(), addToBackStack = true)
         }
 
-        HomeFragment.searchByManufact(this)
+        HomeFragment.searchByManufact(object :SearchManufactData{
+            override fun onHomeSearch(manufacturer: Manufacturer) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     fun openFragment(fragment: Fragment, value: Boolean = false) {

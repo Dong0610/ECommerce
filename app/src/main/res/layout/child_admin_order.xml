@@ -1,0 +1,535 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Trạng thái đơn hàng"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Mã đơn hàng"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_id_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Thời gian"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_time_ordrer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Tên khách hàng"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_us_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Mã khách hàng"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_us_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Điện thoại"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_user_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Địa chỉ"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/us_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Mã sản phẩm"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/id_product"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:background="@drawable/bg_btn_account_end"
+                    android:fontFamily="@font/worksans_medium"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_4sdp"
+                    android:text="Chi tiết"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <dong.duan.ecommerce.utility.CustomLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_6sdp"
+            android:gravity="center"
+            android:padding="@dimen/_3sdp"
+            app:cornerRadius="@dimen/_3sdp"
+            app:strokeColor="#D5D5D5">
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop" />
+
+        </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Số lượng đặt"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_order_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Số lượng còn lại"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_product_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Giá"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Thành tiền"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:background="@drawable/bg_edt_account_dis"
+                    android:fontFamily="@font/worksans_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cancel_bill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:text="Nội dung hủy đơn"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_cancel_ordrer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:background="@drawable/bg_edt_account_dis"
+                android:fontFamily="@font/worksans_medium"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/textcolor2"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:weightSum="3">
+
+            <dong.duan.ecommerce.utility.CustomLinearLayout
+                android:id="@+id/btn_process_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:strokeColor="#03A9F4">
+
+                <TextView
+                    android:id="@+id/txt_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/worksans_medium"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_4sdp"
+                    android:text="Xử lí"
+                    android:textAlignment="center"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+            <dong.duan.ecommerce.utility.CustomLinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/btn_transpot_order"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:strokeColor="#8A2BE2">
+
+                <TextView
+                    android:id="@+id/txt_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_4sdp"
+                    android:text="Giao hàng"
+                    android:textAlignment="center"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+            <dong.duan.ecommerce.utility.CustomLinearLayout
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:strokeColor="#FF0000">
+
+                <TextView
+                    android:id="@+id/txt_p3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_medium"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_4sdp"
+                    android:text="Hủy đơn"
+                    android:textAlignment="center"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/_12sdp" />
+            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

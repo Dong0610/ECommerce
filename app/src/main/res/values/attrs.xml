@@ -5,6 +5,7 @@
         <attr name="strokeWidth" format="dimension"/>
         <attr name="strokeColor" format="color"/>
         <attr name="gradientColors" format="reference"/>
+        <attr name="backgroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="CheckBoxImageView">

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -15,11 +14,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/child_admin_order"
             android:layout_width="match_parent"
-            android:padding="@dimen/_3sdp"
-            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/_6sdp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progress_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/appcolor"
+
+            app:layout_constraintBottom_toBottomOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:padding="@dimen/_3sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -29,11 +55,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_3sdp"
                 android:fontFamily="@font/worksans_semi_bold"
                 android:text="Tất cả"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_3sdp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -49,13 +75,12 @@
                 android:id="@+id/txt_value_sr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tất cả"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:fontFamily="@font/worksans_semi_bold"
+                android:text="Tất cả"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_sort_data"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,7 +178,7 @@
                             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
                             <dong.duan.ecommerce.utility.CustomLinearLayout
-                                android:layout_width="@dimen/_222sdp"
+                                android:layout_width="@dimen/_221sdp"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/_5sdp"
                                 android:paddingVertical="@dimen/_4sdp"
@@ -171,7 +196,26 @@
                             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
                             <dong.duan.ecommerce.utility.CustomLinearLayout
-                                android:layout_width="@dimen/_136sdp"
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="@dimen/_5sdp"
+                                android:paddingVertical="@dimen/_4sdp"
+                                app:cornerRadius="0dp"
+                                app:strokeColor="#ccc"
+                                app:strokeWidth="1sp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Size"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                            </dong.duan.ecommerce.utility.CustomLinearLayout>
+
+
+                            <dong.duan.ecommerce.utility.CustomLinearLayout
+                                android:layout_width="@dimen/_138sdp"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/_5sdp"
                                 android:paddingVertical="@dimen/_4sdp"
@@ -207,7 +251,7 @@
                             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
                             <dong.duan.ecommerce.utility.CustomLinearLayout
-                                android:layout_width="@dimen/_183sdp"
+                                android:layout_width="@dimen/_181sdp"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/_5sdp"
                                 android:paddingVertical="@dimen/_4sdp"
@@ -225,7 +269,7 @@
                             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
                             <dong.duan.ecommerce.utility.CustomLinearLayout
-                                android:layout_width="@dimen/_250sdp"
+                                android:layout_width="@dimen/_251sdp"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/_5sdp"
                                 android:paddingVertical="@dimen/_4sdp"
@@ -261,7 +305,7 @@
                             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
                             <dong.duan.ecommerce.utility.CustomLinearLayout
-                                android:layout_width="@dimen/_100sdp"
+                                android:layout_width="@dimen/_102sdp"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/_5sdp"
                                 android:paddingVertical="@dimen/_4sdp"

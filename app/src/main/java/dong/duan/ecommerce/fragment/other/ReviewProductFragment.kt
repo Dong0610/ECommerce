@@ -54,7 +54,9 @@ class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewPro
                             reviewComment = doc[Constant.REVIEW_COMMERNT].toString()
                             reviewTime = (doc[Constant.REVIEW_TIME]).toString()
                         }
-                        listData.add(review)
+                        if(review.productID.equals(product.id)){
+                            listData.add(review)
+                        }
                     }
                     calback(listData)
                 }

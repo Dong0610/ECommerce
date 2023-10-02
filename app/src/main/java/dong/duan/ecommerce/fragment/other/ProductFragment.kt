@@ -24,7 +24,7 @@ import dong.duan.ecommerce.utility.Constant
 import java.util.Timer
 import kotlin.concurrent.timerTask
 
-class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetailBinding>() {
+class ProductFragment(val product: Product,var isAdmin: Boolean=false) : BaseFragment<FragmentProductDetailBinding>() {
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentProductDetailBinding.inflate(layoutInflater, container, false)
 
@@ -43,8 +43,18 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
             replaceFullViewFragment(ReviewProductFragment(product = product), true)
         }
         binding.btnAddCard.setOnClickListener {
-            addToCart()
+            if(sizeSelect.equals("0")||sizeSelect.equals("")){
+                show_toast("Chưa chọn size!")
+            }
+            else{
+                addToCart()
+            }
+
         }
+       if (isAdmin){
+           binding.btnAddCard.visibility=View.GONE
+           binding.icLove.visibility=View.GONE
+       }
     }
 
     private fun addToCart() {
@@ -57,6 +67,7 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
         hasMap[Constant.CART_PRODUCT_SHOP_ID] = product.idShop
         hasMap[Constant.CART_PRODUCT_PRICE] =
             product.price - (product.price * product.saleOff / 100)
+        hasMap[Constant.CART_PRODUCT_SIZE]= this.sizeSelect
         hasMap[Constant.CART_PRODUCT_ISBUY] = true
         hasMap[Constant.CART_PRODUCT_COUNT] = 1
         database.getReference(Constant.KEY_CART)
@@ -76,14 +87,14 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
         val listLove = MyDatabaseHelper().readFavorite()
 
         val isLove = listLove.find { it == product.id }
-
         binding.icLove.setImageResource(if (isLove != null) R.drawable.ic_love_card else R.drawable.ic_love_app)
         binding.txtPrice.text = product.price.toString() + "$"
         binding.txtName.text = product.name
-        binding.rating.numStars = 3
+        binding.rating.rating = product.star
         binding.txtStyle.text = product.style
-        binding.txtIntroduce.text = product.description
 
+        binding.txtIntroduce.text = product.description
+        binding.txtStyle.text= product.style
         binding.icLove.setOnClickListener {
             if (isLove == null) {
                 MyDatabaseHelper().insertFavorite(product.id)
@@ -109,6 +120,7 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
                 show_toast("Đã xóa khỏi danh sách yêu thích!")
             }
     }
+    var sizeSelect =""
 
     private fun addToLove(product: Product) {
         val hasMap = HashMap<String, Any>()
@@ -204,9 +216,11 @@ class ProductFragment(val product: Product) : BaseFragment<FragmentProductDetail
                 } else {
                     R.drawable.bg_item_unselect_category
                 }
+
             )
             itembinding.root.setOnClickListener {
                 currentSize = i
+                this.sizeSelect = item.size.toString()
                 sizeAdapter?.notifyDataSetChanged()
             }
         }

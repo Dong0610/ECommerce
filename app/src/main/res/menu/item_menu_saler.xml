@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/ic_add_sp"
-        android:icon="@drawable/ic_round_add"
+        android:icon="@drawable/ic_add_circle_outline"
         tools:ignore="MenuTitle" />
     <item
         android:id="@+id/ic_revenue"

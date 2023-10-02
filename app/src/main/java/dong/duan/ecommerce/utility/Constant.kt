@@ -54,6 +54,7 @@ object Constant {
     val PRODUCT_MANU_NAME = "product_manu_name"
     val PRODUCT_DESCRIBLE = "product_describle"
     val PRODUCT_STYLE = "product_style"
+    val PRODUCT_EVALUATION = "product_evaluation"
 
 
 
@@ -63,6 +64,7 @@ object Constant {
     val CART_USER_NAME= "cart_us_name"
     val CART_PRODUCT_ID= "cart_product_id"
     val CART_PRODUCT_NAME= "cart_product_name"
+    val CART_PRODUCT_SIZE= "cart_product_size"
     val CART_PRODUCT_IMG= "cart_product_img"
     val CART_PRODUCT_PRICE= "cart_product_price"
     val CART_PRODUCT_COUNT= "cart_pr_count"
@@ -87,6 +89,8 @@ object Constant {
     var ORDER_STATUS ="order_status"
     var ORDER_TIME="order_time"
     var ORDER_STATUS_TIME="order_status_time"
+    var ORDER_CANCEL_VALUE="order_cancel_val"
+    var ORDER_PR_SIZE="order_product_size"
 
 
 

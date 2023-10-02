@@ -97,7 +97,7 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
     private fun setResultToView(listResult: MutableList<Product>) {
         val productAdapter = HomeProductAdapter(requireContext(), object : OnProductSelected {
             override fun onItemSelect(product: Product) {
-                replaceFullViewFragment(ProductFragment(product), true)
+                replaceFullViewFragment(ProductFragment(product, false), true)
             }
         })
         binding.rcvResultSreach.adapter = productAdapter
@@ -121,7 +121,7 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
                         val count = document[Constant.PRODUCT_COUNT].toString().toInt()
                         val imageUrl = document[Constant.PRODUCT_IMG] as? MutableList<Any> ?: null
                         val idUser = document[Constant.PRODUCT_USER_ID].toString()
-                        val star = document[Constant.PRODUCT_STAR].toString().toInt()
+                        val star = document[Constant.PRODUCT_STAR].toString().toFloat()
                         val timeUp = document[Constant.PRODUCT_TIME_UP].toString()
                         val describle = document[Constant.PRODUCT_DESCRIBLE].toString()
                         val manuID = document[Constant.PRODUCT_MANU_ID].toString()
@@ -131,6 +131,8 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
                         val productSizeData =
                             document[Constant.PRODUCT_SIZE] as? List<HashMap<String, Any>>
                                 ?: emptyList()
+                        val style = document[Constant.PRODUCT_STYLE].toString()
+                        val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -152,7 +154,7 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
                             productSizeList,
                             manuID,
                             manuName,
-                            describle
+                            describle,style,evaluator
                         )
                         productList.add(product)
 

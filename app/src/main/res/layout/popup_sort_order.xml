@@ -24,6 +24,15 @@
         android:textColor="@color/textcolor2"
         android:textSize="@dimen/_12sdp" />
     <TextView
+        android:id="@+id/process"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/worksans_medium"
+        android:padding="@dimen/_6sdp"
+        android:text="Đang xử lí"
+        android:textColor="@color/textcolor2"
+        android:textSize="@dimen/_12sdp" />
+    <TextView
         android:id="@+id/reject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

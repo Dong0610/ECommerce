@@ -10,13 +10,13 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
-import dong.duan.ecommerce.R
 import dong.duan.ecommerce.adapter.admin.OnPopupCalback
 import dong.duan.ecommerce.adapter.admin.PopupManufactAdapter
 import dong.duan.ecommerce.databinding.FragmentAddProductBinding
@@ -25,13 +25,11 @@ import dong.duan.ecommerce.databinding.ItemListProductSizeBinding
 import dong.duan.ecommerce.databinding.PopupSelectManufactBinding
 import dong.duan.ecommerce.library.GenericAdapter
 import dong.duan.ecommerce.library.OnPutImageListener
-import dong.duan.ecommerce.library.PopUpLocation
+import dong.duan.ecommerce.library.base.BasePopupLocation
 import dong.duan.ecommerce.library.putImgToStorage
 import dong.duan.ecommerce.library.sharedPreferences
-import dong.duan.ecommerce.library.show_popup_menu
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Manufacturer
-import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductSize
 import dong.duan.ecommerce.utility.Constant
 import java.util.Date
@@ -49,7 +47,7 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
     }
 
     companion object {
-        private const val REQUEST_CODE_PICK_IMAGES = 101
+         const val REQUEST_CODE_PICK_IMAGES = 101
     }
 
     var listImagePR = mutableListOf<Uri?>()
@@ -59,18 +57,15 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
 
     private var imageAdapter: GenericAdapter<Uri?, ItemImageAdminProductBinding>? = null
 
+    var popup: BasePopupLocation<PopupSelectManufactBinding>? = null
+    var listManufacturer = mutableListOf<Manufacturer>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initData() {
 
-        val manufactAdapter = PopupManufactAdapter(object : OnPopupCalback {
-            override fun OnSelect(manufact: Manufacturer) {
-                manufacturer = manufact
-                binding.txtNewManufact.text = manufact.nameManu
-            }
-        })
 
         getManuFacturer {
-            manufactAdapter.setItems(it)
+            listManufacturer = it
         }
 
         binding.btnSaveData.setOnClickListener {
@@ -79,16 +74,28 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
 
 
 
-        binding.icShowManufact.setOnClickListener {
+        binding.icShowManufact.setOnClickListener { view ->
             binding.llNewManufact.post {
-                show_popup_menu(
-                    binding.llNewManufact,
-                    PopupSelectManufactBinding::inflate,
-                    width = binding.llNewManufact.width,
-                    popUpLocation = PopUpLocation.DEFAULT_BOTTOM
-                ) { itembinding, popup ->
-                    itembinding.rcvListManufact.adapter = manufactAdapter
+                val location = IntArray(2)
+                binding.llNewManufact.getLocationOnScreen(location)
+                val x = location[0]
+                val y = location[1] + binding.llNewManufact.height + 2
+                popup = BasePopupLocation(
+                    this@FragmentAddProduct.requireContext(),
+                    binding.llNewManufact, PopupSelectManufactBinding::inflate,
+                    x, y, width = binding.llNewManufact.width
+                ) { i, p ->
+                    val manufactAdapter = PopupManufactAdapter(object : OnPopupCalback {
+                        override fun OnSelect(manufact: Manufacturer) {
+                            manufacturer = manufact
+                            binding.txtNewManufact.text = manufact.nameManu
+                            p.dismiss()
+                        }
+                    })
+                    i.rcvListManufact.adapter = manufactAdapter
+                    manufactAdapter.setItems(listManufacturer)
                 }
+                popup!!.show()
             }
         }
 
@@ -174,22 +181,22 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
     private fun saveProduct() {
         val hashMap = HashMap<String, Any>()
         loadding.show()
-        getImageArrlist {listUrl->
+        getImageArrlist { listUrl ->
             hashMap[Constant.PRODUCT_NAME] = binding.edtProductName.text.toString()
-            hashMap[Constant.PRODUCT_SIZE] = listSize // arraylist Int
+            hashMap[Constant.PRODUCT_SIZE] = listSize
             hashMap[Constant.PRODUCT_PRICE] = binding.edtProductPrice.text.toString()
             hashMap[Constant.PRODUCT_SALEOFF] = binding.edtProductDiscount.text.toString()
             hashMap[Constant.PRODUCT_STAR] = 0
-            hashMap[Constant.PRODUCT_IMG] = listUrl // arraylist String
+            hashMap[Constant.PRODUCT_IMG] = listUrl
             hashMap[Constant.PRODUCT_COUNT] = binding.edtProductCount.text.toString()
             hashMap[Constant.PRODUCT_USER_ID] =
                 sharedPreferences.getString(Constant.USER_ID, null).toString()
             hashMap[Constant.PRODUCT_TIME_UP] = Date()
             hashMap[Constant.PRODUCT_SHOP_ID] =
                 sharedPreferences.getString(Constant.SHOP_ID).toString()
-            hashMap[Constant.PRODUCT_DESCRIBLE] =binding.edtDescrible.text.toString()
-            hashMap[Constant.PRODUCT_MANU_ID]= manufacturer.idManu
-            hashMap[Constant.PRODUCT_MANU_NAME]= manufacturer.nameManu
+            hashMap[Constant.PRODUCT_DESCRIBLE] = binding.edtDescrible.text.toString()
+            hashMap[Constant.PRODUCT_MANU_ID] = manufacturer.idManu
+            hashMap[Constant.PRODUCT_MANU_NAME] = manufacturer.nameManu
             hashMap[Constant.PRODUCT_STYLE] = binding.edtProductStyle.text.toString()
             hashMap[Constant.PRODUCT_IS_SALE] = true
 
@@ -215,13 +222,14 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
             ItemImageAdminProductBinding::inflate
         ) { itembinding, item, position ->
             if (item == null) {
+                itembinding.imageAddImg.visibility = View.VISIBLE
+                itembinding.imagePreview.visibility = View.GONE
                 itembinding.root.setOnClickListener {
                     chooseImage()
                 }
-                Glide.with(requireContext()).load(R.drawable.img_add_image)
-                    .into(itembinding.imagePreview)
-                itembinding.imagePreview.setPadding(50, 50, 50, 50)
             } else {
+                itembinding.imageAddImg.visibility = View.GONE
+                itembinding.imagePreview.visibility = View.VISIBLE
                 Glide.with(requireContext()).load(item).into(itembinding.imagePreview)
             }
 

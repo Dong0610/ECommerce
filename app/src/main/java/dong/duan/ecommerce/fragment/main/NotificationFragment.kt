@@ -33,7 +33,7 @@ class NotificationFragment :BaseFragment<FragmentNotificationBinding>() {
                 itembinding.txtTime.text= notification.time
                 itembinding.txtDetail.setOnClickListener {
                     productById(notification.productID){
-                        replaceFullViewFragment(ProductFragment(it), true)
+                        replaceFullViewFragment(ProductFragment(it, false), true)
                     }
                 }
             }
@@ -56,7 +56,7 @@ class NotificationFragment :BaseFragment<FragmentNotificationBinding>() {
                         val count = document[Constant.PRODUCT_COUNT].toString().toInt()
                         val imageUrl = document[Constant.PRODUCT_IMG] as? MutableList<Any> ?: null
                         val idUser = document[Constant.PRODUCT_USER_ID].toString()
-                        val star = document[Constant.PRODUCT_STAR].toString().toInt()
+                        val star = document[Constant.PRODUCT_STAR].toString().toFloat()
                         val timeUp = document[Constant.PRODUCT_TIME_UP].toString()
                         val describle = document[Constant.PRODUCT_DESCRIBLE].toString()
                         val manuID = document[Constant.PRODUCT_MANU_ID].toString()
@@ -66,6 +66,8 @@ class NotificationFragment :BaseFragment<FragmentNotificationBinding>() {
                         val productSizeData =
                             document[Constant.PRODUCT_SIZE] as? List<HashMap<String, Any>>
                                 ?: emptyList()
+                        val style = document[Constant.PRODUCT_STYLE].toString()
+                        val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -87,7 +89,7 @@ class NotificationFragment :BaseFragment<FragmentNotificationBinding>() {
                             productSizeList,
                             manuID,
                             manuName,
-                            describle
+                            describle, style,evaluator
                         )
                         if (product.id == prID) {
                             calback(product)

@@ -24,8 +24,15 @@ class GenericAdapter<T, VB : ViewBinding>(
         return itemList.size
     }
 
+    var position=RecyclerView.NO_POSITION
     override fun onBindViewHolder(holder: GenericViewHolder<VB>, position: Int) {
         val item = itemList[position]
         binder.invoke(holder.binding, item, position)
     }
+    fun setItem(position: Int){
+        notifyItemChanged(this.position)
+        this.position=position
+        notifyItemChanged(position)
+    }
 }
+

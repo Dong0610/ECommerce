@@ -138,7 +138,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
 
             override fun onSelect(idProcunt: String) {
                 productById(idProcunt) {
-                    replaceFullViewFragment(ProductFragment(it), true)
+                    replaceFullViewFragment(ProductFragment(it, false), true)
                 }
             }
 
@@ -239,6 +239,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
 
+
+
     fun productById(prID: String, calback: (Product) -> Unit) {
         firestore.collection(Constant.KEY_PRODUCT)
             .get()
@@ -253,7 +255,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                         val count = document[Constant.PRODUCT_COUNT].toString().toInt()
                         val imageUrl = document[Constant.PRODUCT_IMG] as? MutableList<Any> ?: null
                         val idUser = document[Constant.PRODUCT_USER_ID].toString()
-                        val star = document[Constant.PRODUCT_STAR].toString().toInt()
+                        val star = document[Constant.PRODUCT_STAR].toString().toFloat()
                         val timeUp = document[Constant.PRODUCT_TIME_UP].toString()
                         val describle = document[Constant.PRODUCT_DESCRIBLE].toString()
                         val manuID = document[Constant.PRODUCT_MANU_ID].toString()
@@ -263,6 +265,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                         val productSizeData =
                             document[Constant.PRODUCT_SIZE] as? List<HashMap<String, Any>>
                                 ?: emptyList()
+                        val style = document[Constant.PRODUCT_STYLE].toString()
+                        val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -284,7 +288,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                             productSizeList,
                             manuID,
                             manuName,
-                            describle
+                            describle,style,evaluator
                         )
                         if (product.id == prID) {
                             calback(product)
@@ -324,7 +328,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                                 val productName = cartProduct[Constant.CART_PRODUCT_NAME].toString()
                                 val productImg = cartProduct[Constant.CART_PRODUCT_IMG].toString()
                                 val price = cartProduct[Constant.CART_PRODUCT_PRICE] as Long
-
+                                val prSize = cartProduct[Constant.CART_PRODUCT_SIZE].toString().toInt()
                                 val cardProduct = CardProduct(
                                     false,
                                     userId,
@@ -334,7 +338,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                                     productShopID,
                                     productName,
                                     productImg,
-                                    price.toFloat()
+                                    price.toFloat(),prSize
                                 )
 
                                 cartProducts.add(cardProduct)
@@ -486,6 +490,8 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
             hasmap[Constant.ODR_ADR_S_PHONE] = address!!.phoneNumber2
             hasmap[Constant.ORDER_PR_PRICE] = item.price
             hasmap[Constant.ORDRT_PR_IMG] = item.prductImg
+            hasmap[Constant.ORDER_CANCEL_VALUE]=""
+            hasmap[Constant.ORDER_PR_SIZE] = item.size
             hasmap[Constant.ORDER_STATUS] = OrderStatus.WAIT_PROCESS
             hasmap[Constant.ORDER_TIME] = time
             hasmap[Constant.ORDER_STATUS_TIME] = time

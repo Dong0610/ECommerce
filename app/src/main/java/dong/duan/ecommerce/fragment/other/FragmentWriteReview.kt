@@ -12,6 +12,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -52,6 +53,27 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
 
         binding.btnSaveReview.setOnClickListener {
             saveProduct()
+        }
+
+        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+            var sumRatting = product.star*product.evaluation
+            val rattingValue = (sumRatting+rating)/(product.evaluation+1)
+            val hasmap = HashMap<String,Any>()
+
+            hasmap[Constant.PRODUCT_EVALUATION]=  (product.evaluation+1)
+            hasmap[Constant.PRODUCT_STAR] = rattingValue
+
+            product.evaluation= product.evaluation+1
+            product.star= rattingValue
+            firestore.collection(Constant.KEY_PRODUCT)
+                .document(product.id)
+                .update(hasmap)
+                .addOnFailureListener {
+                    show_toast("Đã đánh giá sản phẩm")
+                }
+                .addOnFailureListener {
+                    show_toast(it.message.toString())
+                }
         }
     }
 

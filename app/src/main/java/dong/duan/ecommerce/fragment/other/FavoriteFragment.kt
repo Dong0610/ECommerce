@@ -50,7 +50,7 @@ class FavoriteFragment : BaseFragment<FavoriteFragmentBinding>() {
         }
          favoriteAdapter = MyFavoriteAdapter(requireContext(), object : OnFavoriteSelected {
             override fun onItemSelect(product: Product) {
-                replaceFullViewFragment(ProductFragment(product), true)
+                replaceFullViewFragment(ProductFragment(product, false), true)
             }
 
             override fun onDelete(product: Product) {

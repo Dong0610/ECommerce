@@ -1,6 +1,7 @@
 package dong.duan.ecommerce.model
 
 import java.io.Serializable
+import java.util.Date
 
 interface IMoldels : Serializable
 
@@ -44,14 +45,15 @@ data class Product(
     var count: Int,
     var imageUrl: MutableList<Any>?,
     var idUser: String,
-    var star: Int,
+    var star: Float,
     var timeUp: String = "",
     var isSale: Boolean = true,
     var porductSize: MutableList<ProductSize>? = null,
     var idManufacturer: String = "",
     var nameManufacturer: String = "",
     var description: String = "",
-    var style: String = "CD0113-400"
+    var style: String = "CD0113-400",
+    var evaluation:Int
 ) : IMoldels
 
 data class ProductSize(var size: String) : IMoldels
@@ -67,7 +69,8 @@ data class CardProduct(
     var productShopID: String,
     var productName: String,
     var prductImg: String,
-    var price: Float
+    var price: Float,
+    var size :Int
 ) : IMoldels
 
 
@@ -81,13 +84,15 @@ data class Order(
     var productPrice: Float = 0.0f,
     var productImg: String = "",
     var orderStatus: String = "",
-    var orderTime: String = "",
-    var orderStatusTime: String = "",
+    var orderTime: Date = Date(),
+    var orderStatusTime:Date =Date(),
     var remindName: String = "",
     var receiverName: String = "",
     var location: String = "",
     var phoneNumber: String = "",
-    var phoneNumber2: String = ""
+    var phoneNumber2: String = "",
+    var cancelMess:String="",
+    var orderPrSize :Int = 0
 ) : IMoldels
 
 class Notification(var id: String, var varue: String, var time: String, var productID: String) :
@@ -98,6 +103,8 @@ data class Address constructor(
     var receiverName: String = "",
     var location: String = "", var phoneNumber: String = "", var phoneNumber2: String = ""
 ) : IMoldels
+
+data class OrderData(var value:String="",var count:Int =0,var maxCount:Int =0):IMoldels
 
 data class CreditCard constructor(
     var idCard: String, var imgCard: Any?,

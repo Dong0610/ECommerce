@@ -27,16 +27,16 @@
         android:text="@string/fs_nike_air_max_270_react"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <RatingBar
-        android:progressTint="@color/yellow"
-        android:layout_marginTop="@dimen/_6sdp"
         android:id="@+id/rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_16sdp"
-        style="?android:attr/ratingBarStyleSmall"
+        android:layout_height="wrap_content"
         android:numStars="5"
-        android:stepSize="0.1"
-        android:isIndicator="true" />
+        android:rating="0"
+        android:stepSize="0.2"
+        android:isIndicator="true"/>
     <TextView
         android:maxLines="1"
         android:textColor="@color/appcolor"

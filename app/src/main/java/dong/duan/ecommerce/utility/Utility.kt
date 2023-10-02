@@ -19,7 +19,7 @@ enum class OrderStatus {
     PROCESSING,
     WAIT_PROCESS,
     REJECT,
-    RECEVIED,
+    RECEIVED,
     TRANSPORT
 }
 
@@ -41,8 +41,8 @@ fun colorByStatus(type: String): Int {
         "PROCESSING" -> Color.parseColor("#03A9F4") // Replace with the desired color code
         "WAIT_PROCESS" -> Color.parseColor("#FF9800") // Replace with the desired color code
         "REJECT" -> Color.parseColor("#FF0000") // Replace with the desired color code
-        "RECEIVED" -> Color.parseColor("#00FF19") // Replace with the desired color code
-        "TRANSPORT" -> Color.parseColor("#9C27B0") // Replace with the desired color code
+        "RECEIVED" -> Color.parseColor("#FF01D301") // Replace with the desired color code
+        "TRANSPORT" -> Color.parseColor("#8A2BE2") // Replace with the desired color code
         else -> Color.parseColor("#d5d5d5") // Default color if status doesn't match
     }
 }
@@ -136,6 +136,7 @@ class CustomConstrainLayout @JvmOverloads constructor(
     private var strokeColor: Int = ContextCompat.getColor(context, R.color.textcolor2)
     private var strokeWidth: Int = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._1sdp)
     private var gradientColors: IntArray? = null
+    private var backgroundColor: Int = ContextCompat.getColor(context, R.color.white)
 
     init {
         attrs?.let {
@@ -159,10 +160,12 @@ class CustomConstrainLayout @JvmOverloads constructor(
                     null
                 }
             }
+            backgroundColor =
+                typedArray.getColor(R.styleable.CustomLinearLayout_backgroundColor, backgroundColor)
             typedArray.recycle()
         }
         val backgroundDrawable = GradientDrawable()
-        backgroundDrawable.setColor(ContextCompat.getColor(context, R.color.white))
+        backgroundDrawable.setColor(backgroundColor)
         backgroundDrawable.cornerRadius = cornerRadius
         backgroundDrawable.setStroke(strokeWidth, strokeColor)
 
@@ -179,6 +182,21 @@ class CustomConstrainLayout @JvmOverloads constructor(
         val backgroundDrawable = background as? GradientDrawable
         backgroundDrawable?.cornerRadius = radius
     }
+    fun setBackground(color: Int) {
+        backgroundColor = color
+        val backgroundDrawable = GradientDrawable()
+        backgroundDrawable.setColor(backgroundColor)
+        backgroundDrawable.cornerRadius = cornerRadius
+        backgroundDrawable.setStroke(strokeWidth, strokeColor)
+
+        if (gradientColors != null && gradientColors!!.isNotEmpty()) {
+            backgroundDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+            backgroundDrawable.colors = gradientColors
+        }
+
+        background = backgroundDrawable
+    }
+
 
     fun setStrokeColor(color: Int) {
         strokeColor = color
@@ -204,6 +222,7 @@ class CustomConstrainLayout @JvmOverloads constructor(
         }
     }
 }
+
 
 
 class CheckBoxImageView @JvmOverloads constructor(

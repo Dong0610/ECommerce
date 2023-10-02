@@ -96,6 +96,26 @@
             android:background="#ccc"
             android:layout_width="1sp"
             android:layout_height="match_parent"/>
+        <dong.duan.ecommerce.utility.CustomLinearLayout
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_4sdp"
+            app:cornerRadius="0dp"
+            app:strokeColor="#ccc"
+            app:strokeWidth="0sp">
+
+            <TextView
+                android:id="@+id/txt_pr_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="0xjqoiLdzBHM4e4pN8Xo" />
+        </dong.duan.ecommerce.utility.CustomLinearLayout>
+        <View
+            android:background="#ccc"
+            android:layout_width="1sp"
+            android:layout_height="match_parent"/>
 
         <dong.duan.ecommerce.utility.CustomLinearLayout
             android:layout_width="@dimen/_136sdp"

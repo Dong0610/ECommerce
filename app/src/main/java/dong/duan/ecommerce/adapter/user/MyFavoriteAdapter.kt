@@ -19,7 +19,7 @@ class MyFavoriteAdapter(var context:Context,var onItemSelected: OnFavoriteSelect
         binding.txtName.setText(item.name)
         Glide.with(context).load(item.imageUrl!!.get(0)).into(binding.imgProduct)
         binding.txtPrice.text = "${item.price}$"
-        binding.rating.numStars= item.star
+        binding.rating.rating= item.star
         binding.txtDiscount.text= "${item.price-(item.price*(item.saleOff/100))}$"
         binding.txtSale.text="${item.saleOff}%"
         binding.icdelete.setOnClickListener {

@@ -42,29 +42,43 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
 
     lateinit var productAdapter: AdminProductAdapter
 
+    var listProduct= mutableListOf<Product>()
 
     override fun initView() {
         productAdapter = AdminProductAdapter(object : OnCardAdminEvent {
             override fun editProduct(product: Product) {
-
+                addFragment(FragmentEditProduct(product))
             }
 
             override fun onDelete(product: Product) {
-
+                firestore.collection(Constant.KEY_PRODUCT)
+                    .document(product.id)
+                    .update(Constant.PRODUCT_IS_SALE,false)
+                    .addOnCompleteListener {
+                        show_toast("Đã ngưng bán sản phẩm")
+                    }
+                    .addOnFailureListener { e->
+                        show_toast(e.message.toString())
+                    }
             }
-
-            override fun onUpdateCount(price: Float) {
-
-            }
-
             override fun onDetail(product: Product) {
-                addFragment(ProductFragment(product))
+                addFragment(ProductFragment(product,true))
+            }
+        })
+
+
+        FragmentEditProduct.updateProduct(object :FragmentEditProduct.OnUpdateValue{
+            override fun OnUpdate(product: Product) {
+                val index= listProduct.indexOf(listProduct.find { it.id==product.id })
+                listProduct.set(index,product)
+                productAdapter.setItems(listProduct)
             }
         })
 
         getAllProduct { list ->
+            listProduct= list
             binding.rcvListSp.adapter = productAdapter
-            productAdapter.setItems(list)
+            productAdapter.setItems(listProduct)
             updateValue(list.size)
             binding.rcvListSp
         }
@@ -88,16 +102,19 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
                         val count = document[Constant.PRODUCT_COUNT].toString().toInt()
                         val imageUrl = document[Constant.PRODUCT_IMG] as? MutableList<Any> ?: null
                         val idUser = document[Constant.PRODUCT_USER_ID].toString()
-                        val star = document[Constant.PRODUCT_STAR].toString().toInt()
+                        val star = document[Constant.PRODUCT_STAR].toString().toFloat()
                         val timeUp = document[Constant.PRODUCT_TIME_UP].toString()
                         val describle = document[Constant.PRODUCT_DESCRIBLE].toString()
                         val manuID = document[Constant.PRODUCT_MANU_NAME].toString()
                         val manuName = document[Constant.PRODUCT_TIME_UP].toString()
                         val isSale = document[Constant.PRODUCT_IS_SALE].toString().toBoolean()
                         val productSizeList = mutableListOf<ProductSize>()
+
                         val productSizeData =
                             document[Constant.PRODUCT_SIZE] as? List<HashMap<String, Any>>
                                 ?: emptyList()
+                        val style = document[Constant.PRODUCT_STYLE].toString()
+                        val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -119,7 +136,9 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
                             productSizeList,
                             manuID,
                             manuName,
-                            describle
+                            describle,
+                            style,
+                            evaluator
                         )
                         if (idShop.equals(shopID)) {
                             productList.add(product)
