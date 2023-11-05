@@ -6,7 +6,7 @@
     android:paddingHorizontal="@dimen/_12sdp"
     android:paddingVertical="@dimen/_6sdp"
     android:layout_marginVertical="@dimen/_3sdp"
-    android:background="@drawable/bg_edt_account_end"
+    android:background="@drawable/bg_edt_account_dis"
     android:layout_height="wrap_content">
 
 

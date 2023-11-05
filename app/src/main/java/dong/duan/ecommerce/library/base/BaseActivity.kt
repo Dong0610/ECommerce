@@ -49,9 +49,10 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         setContentView(binding.root)
+        loadding= DialogLoadding(this)
         decorView = window.decorView
         createView()
-        loadding= DialogLoadding(this)
+
     }
     protected abstract fun getViewBinding(): V
 

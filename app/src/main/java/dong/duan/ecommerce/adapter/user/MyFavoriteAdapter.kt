@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.databinding.ItemListFavoriteViewBinding
 import dong.duan.ecommerce.model.Product
+import dong.duan.ecommerce.utility.formatToCurrency
 
 class MyFavoriteAdapter(var context:Context,var onItemSelected: OnFavoriteSelected):BaseAdapter<Product,ItemListFavoriteViewBinding> (){
     override fun createBinding(
@@ -18,9 +19,9 @@ class MyFavoriteAdapter(var context:Context,var onItemSelected: OnFavoriteSelect
     override fun bind(binding: ItemListFavoriteViewBinding, item: Product, position: Int) {
         binding.txtName.setText(item.name)
         Glide.with(context).load(item.imageUrl!!.get(0)).into(binding.imgProduct)
-        binding.txtPrice.text = "${item.price}$"
+        binding.txtPrice.text = formatToCurrency(item.price)
         binding.rating.rating= item.star
-        binding.txtDiscount.text= "${item.price-(item.price*(item.saleOff/100))}$"
+        binding.txtDiscount.text= formatToCurrency( item.price-(item.price*(item.saleOff/100)))
         binding.txtSale.text="${item.saleOff}%"
         binding.icdelete.setOnClickListener {
             onItemSelected.onDelete(item)

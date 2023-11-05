@@ -12,26 +12,35 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import dong.duan.ecommerce.R
+import dong.duan.ecommerce.adapter.AddressAdapter
+import dong.duan.ecommerce.adapter.OnAddressSelect
+import dong.duan.ecommerce.adapter.admin.OnPopupCalback
+import dong.duan.ecommerce.adapter.admin.PopupManufactAdapter
 import dong.duan.ecommerce.adapter.user.CardAdapter
 import dong.duan.ecommerce.adapter.user.OnCardEvent
 import dong.duan.ecommerce.databinding.FragmentCartBinding
 import dong.duan.ecommerce.databinding.FragmentShipToBinding
 import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
+import dong.duan.ecommerce.databinding.PopupSelectManufactBinding
 import dong.duan.ecommerce.dialog.DialogSuccess
 import dong.duan.ecommerce.dialog.DialogWaring
 import dong.duan.ecommerce.fragment.other.FragmentEditAddress
 import dong.duan.ecommerce.fragment.other.ProductFragment
 import dong.duan.ecommerce.library.GenericAdapter
+import dong.duan.ecommerce.library.base.BasePopupLocation
 import dong.duan.ecommerce.library.data.MyDatabaseHelper
 import dong.duan.ecommerce.library.formatTime
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Address
 import dong.duan.ecommerce.model.CardProduct
+import dong.duan.ecommerce.model.Manufacturer
 import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductSize
 import dong.duan.ecommerce.utility.Constant
 import dong.duan.ecommerce.utility.OrderStatus
+import dong.duan.ecommerce.utility.formatToCurrency
+import java.text.FieldPosition
 import java.util.Date
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {
@@ -40,6 +49,12 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
 
     var listProduct = mutableListOf<CardProduct>()
 
+    var popup: BasePopupLocation<PopupSelectManufactBinding>? = null
+
+    val lisPayMethod = mutableListOf<Manufacturer>(
+        Manufacturer("1","Thanh toán khi nhận hàng ",R.drawable.img_pay_recived)
+    )
+    var isSelectPayment = false
     override fun initView() {
         getCartValue {
             listProduct.clear()
@@ -48,21 +63,63 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             }
             listProduct = it
             initRcv(listProduct)
+            loadding.dismiss()
         }
         onClick()
         if (listProductBuy.size == 0) {
             setBehaveButton(false)
         }
 
+        binding.icShowManufact.setOnClickListener { view ->
+            binding.llNewManufact.post {
+                val location = IntArray(2)
+                binding.llNewManufact.getLocationOnScreen(location)
+                val x = location[0]
+                val y = location[1] + binding.llNewManufact.height + 2
+                popup = BasePopupLocation(
+                    this.requireContext(),
+                    binding.llNewManufact, PopupSelectManufactBinding::inflate,
+                    x, y, width = binding.llNewManufact.width
+                ) { i, p ->
+                    val manufactAdapter = PopupManufactAdapter(object : OnPopupCalback {
+                        override fun OnSelect(manufact: Manufacturer) {
+                            onSelectPayment(manufact)
+                            p.dismiss()
+                        }
+                    })
+                    i.rcvListManufact.adapter = manufactAdapter
+                   manufactAdapter.setItems(lisPayMethod)
+                }
+                popup!!.show()
+            }
+        }
         PayAllProduct.onBuyProduct(object : PayAllProduct.OnRemoveItem {
             override fun removeIndex(index: Int) {
                 listProduct.removeAt(index)
             }
-
             override fun onFinish() {
-                initRcv(listProduct)
+                getCartValue {
+                    listProduct.clear()
+                    if(it.isNotEmpty()){
+                        binding.llNoProduct.visibility= View.GONE
+                    }
+                    else{
+                        binding.llNoProduct.visibility= View.VISIBLE
+                    }
+                    listProduct = it
+                    initRcv(listProduct)
+                    loadding.dismiss()
+                }
             }
         })
+    }
+
+    private fun onSelectPayment(manufact: Manufacturer) {
+        isSelectPayment= true
+        binding.txtNewManufact.text= manufact.nameManu
+        if (listProductBuy.size!=0){
+            setBehaveButton(true)
+        }
     }
 
 
@@ -84,15 +141,18 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     private fun initTotal(listProduct: MutableList<CardProduct>) {
         binding.llSumPay.visibility = View.VISIBLE
         binding.itemCount.text = listProduct.size.toString()
-        binding.txtShipingCount.text = "0"
-        binding.txtShipingVat.text = "0"
 
+        var transmoney=0f
+        var tax= 0f
         var totalPrice = 0f
         listProduct.forEach { item ->
-            totalPrice += item.nunCount * item.price
+            transmoney+=item.transMoney
+            tax+=item.tax
+            totalPrice += (item.nunCount * item.price )+ item.tax+item.transMoney
         }
-
-        binding.txtSumCount.text = totalPrice.toString() + "$"
+        binding.txtShipingMoney.text = formatToCurrency(transmoney)
+        binding.txtShipingVat.text = formatToCurrency(tax)
+        binding.txtSumCount.text = formatToCurrency(totalPrice)
     }
 
     private fun onClick() {
@@ -203,6 +263,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         hasMap[Constant.LOVE_PRODUCT_PRICE] = product.price
         hasMap[Constant.LOVE_PRODUCT_ISBUY] = true
         hasMap[Constant.LOVE_PRODUCT_COUNT] = 1
+
         database.getReference(Constant.KEY_LOVE)
             .child(sharedPreferences.getString(Constant.USER_ID).toString())
             .child(product.productID)
@@ -215,7 +276,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     private fun addDataToBuy(product: CardProduct) {
-        if (listProductBuy.size == 0) {
+        if (listProductBuy.size == 0 && isSelectPayment) {
 
             listProductBuy.add(product)
             setBehaveButton(true)
@@ -228,7 +289,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 listProductBuy.removeAt(indexPr)
             }
 
-            if (listProductBuy.size == 0) {
+            if (listProductBuy.size == 0 || !isSelectPayment) {
                 setBehaveButton(false)
             } else {
                 setBehaveButton(true)
@@ -307,6 +368,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     fun getCartValue(callback: (MutableList<CardProduct>) -> Unit) {
+        loadding.show()
         val userId = sharedPreferences.getString(Constant.USER_ID, "")
         if (userId.isNullOrEmpty()) {
             return
@@ -329,6 +391,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                                 val productImg = cartProduct[Constant.CART_PRODUCT_IMG].toString()
                                 val price = cartProduct[Constant.CART_PRODUCT_PRICE] as Long
                                 val prSize = cartProduct[Constant.CART_PRODUCT_SIZE].toString().toInt()
+                                val tax = cartProduct[Constant.CART_PRODUCT_TAX].toString().toFloat()
+                                val tsMoney= cartProduct[Constant.CART_PRODUCT_TRANSMN].toString().toFloat()
                                 val cardProduct = CardProduct(
                                     false,
                                     userId,
@@ -338,16 +402,14 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                                     productShopID,
                                     productName,
                                     productImg,
-                                    price.toFloat(),prSize
+                                    price.toFloat(),prSize, tsMoney,tax
                                 )
-
                                 cartProducts.add(cardProduct)
                             }
                         }
                     }
                     callback(cartProducts)
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
                     show_toast(databaseError.message)
                 }
@@ -439,38 +501,34 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
             })
     }
 
-    var listadapter: GenericAdapter<Address, ItemShiptoAdressViewBinding>? = null
+    var listadapter:AddressAdapter? = null
     fun inittoRcv(listAddress: MutableList<Address>) {
-        listadapter = GenericAdapter(
-            listAddress,
-            ItemShiptoAdressViewBinding::inflate
-        ) { itembinding, adress, i ->
-            itembinding.icDelete.setOnClickListener {
-                DialogWaring("Are you sure wanna delete address", requireContext(), {
+        listadapter =
+            AddressAdapter(this.requireContext(),false,object :OnAddressSelect{
+                override fun onSelected(address: Address,position: Int) {
+                    this@PayAllProduct.address= address;
+                    listadapter!!.setCurrentPos(position)
+                    setBehaveButton(true)
+                }
+                override fun onEditData(address: Address) {
+                    replaceFullViewFragment(FragmentEditAddress(address),true)
+                }
 
-                }).show()
-            }
-            itembinding.txtAdrName.text= adress.remindName
-            itembinding.txtAdrDetail.text = adress.location
-            itembinding.txtNumPhone.text = adress.phoneNumber
-            itembinding.btnEditAddress.setOnClickListener {
-                replaceFullViewFragment(FragmentEditAddress(adress),true)
-            }
-            itembinding.icDelete.visibility = View.GONE
+                override fun onDelete(address: Address) {
 
-            itembinding.root.setOnClickListener {
-                setBehaveButton(binding.btnCheckOut, true)
-                this.address = adress
-            }
-        }
+                }
+            })
+        listadapter!!.setItems(listAddress);
+
+        binding.rcvListAdress.adapter = listadapter
         binding.icBack.setOnClickListener {
             closeFragment(this)
         }
-        binding.rcvListAdress.adapter = listadapter
     }
 
     private var curentShop = ""
     private fun buyProduct(listProduct: MutableList<CardProduct>) {
+        loadding.show();
         curentShop = listProduct[0].productShopID
         var custom_noti = 0
         listProduct.forEach { item ->
@@ -503,7 +561,7 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
                     notiHasmap[Constant.NOTI_TIME] =
                         "Đơn hàng đã được tạo với mã: ${it.result.id} vào lúc ${formatTime(time)}"
                     notiHasmap[Constant.NOTI_PR_ID] = item.productID
-
+                    notiHasmap[Constant.NOTI_OD_ID] = it.result.id
                     database.getReference(Constant.KEY_NOTIFICATION)
                         .child(hasmap.get(Constant.ORDER_USER_ID).toString())
                         .push()
@@ -537,11 +595,12 @@ class PayAllProduct(var listProduct: MutableList<CardProduct>) :
                 }
             onRemoveItem?.onFinish()
         }
-        DialogSuccess(this.requireContext(), onBack = {
-            Handler(Looper.myLooper()!!).postDelayed({
+        Handler(Looper.myLooper()!!).postDelayed({
+            loadding.dismiss()
+            DialogSuccess(this.requireContext(), onBack = {
                 this.closeFragment(this@PayAllProduct)
-            }, 1500L)
-        }).show()
+            }).show()
+        },1500)
     }
 }
 

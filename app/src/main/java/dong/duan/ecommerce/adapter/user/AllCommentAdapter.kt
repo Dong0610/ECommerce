@@ -30,7 +30,7 @@ class AllCommentAdapter(var context: Context) :
         binding.rating.rating = item.reviewStar
         binding.txtTime.text = item.reviewTime
         binding.contentCm.text = item.reviewComment
-        if (item.reviewImg!!.size > 0) {
+        if (item.reviewImg!!.size != 0) {
             binding.listImg.visibility = View.VISIBLE
             val adapter = GenericAdapter(
                 item.reviewImg!!,
@@ -40,7 +40,7 @@ class AllCommentAdapter(var context: Context) :
             }
             binding.listImg.adapter = adapter
         } else {
-            binding.listImg.visibility = View.VISIBLE
+            binding.listImg.visibility = View.GONE
         }
     }
 }

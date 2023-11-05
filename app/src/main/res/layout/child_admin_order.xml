@@ -443,14 +443,15 @@
                 android:textColor="@color/textcolor"
                 android:textSize="@dimen/_12sdp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/txt_cancel_ordrer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/_130sdp"
                 android:layout_marginHorizontal="@dimen/_6sdp"
                 android:background="@drawable/bg_edt_account_dis"
                 android:fontFamily="@font/worksans_medium"
+                android:gravity="top|left"
+                android:minHeight="@dimen/_130sdp"
                 android:padding="@dimen/_6sdp"
                 android:textColor="@color/textcolor2"
                 android:textSize="@dimen/_12sdp" />
@@ -486,8 +487,8 @@
             </dong.duan.ecommerce.utility.CustomLinearLayout>
 
             <dong.duan.ecommerce.utility.CustomLinearLayout
-                android:layout_width="match_parent"
                 android:id="@+id/btn_transpot_order"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/_3sdp"
                 android:layout_weight="1"

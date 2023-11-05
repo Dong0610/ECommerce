@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/_12sdp"
-    android:layout_margin="@dimen/_12sdp"
-    android:background="@color/white"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:layout_margin="@dimen/_40sdp"
-        android:id="@+id/img_loading"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_sign_app"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"/>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/img_loading"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_loadding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

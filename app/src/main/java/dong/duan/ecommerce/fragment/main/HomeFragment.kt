@@ -45,7 +45,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun initView() {
         initBanner()
         loadRecyview()
-
+        loadding.show()
         getManuFacturer {
             val manufactAdapter = GenericAdapter(
                 it,
@@ -78,10 +78,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             override fun onItemSelect(product: Product) {
                 replaceFullViewFragment(ProductFragment(product, false), true)
             }
-
         })
         binding.rcvListProduct.adapter = productAdapter
         productAdapter.setItems(products)
+
     }
 
     private fun listMegaSale(products: MutableList<Product>) {
@@ -167,6 +167,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                 ?: emptyList()
                         val style = document[Constant.PRODUCT_STYLE].toString()
                         val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
+                        val tax = document[Constant.PRODUCT_TAX].toString().toFloat()
+                        val countbuy= document[Constant.PRODUCT_COUNTBUY].toString().toInt()
+                        val transMoney= document[Constant.PRODUCT_TRANSMONEY].toString().toFloat()
+
+
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -188,7 +193,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             productSizeList,
                             manuID,
                             manuName,
-                            describle,style,evaluator
+                            describle,style,evaluator,countbuy,tax,transMoney
                         )
                         productList.add(product)
 
@@ -198,6 +203,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     show_toast("Error: ${task.exception?.message}")
                 }
             }
+        loadding.dismiss()
     }
 
     private fun loadRecyview() {

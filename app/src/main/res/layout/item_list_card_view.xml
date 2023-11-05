@@ -24,7 +24,8 @@
         android:id="@+id/img_product"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
-        android:layout_margin="@dimen/_12sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginVertical="@dimen/_6sdp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_recommand_sale"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,6 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_product"
@@ -43,9 +45,10 @@
 
         <ImageView
             android:id="@+id/icdelete"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:src="@drawable/ic_round_delete_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +73,7 @@
             android:maxLines="2"
             android:text="@string/fs_nike_air_max_270_react"
             android:textColor="#223263"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/iclove"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +98,7 @@
                 android:maxLines="1"
                 android:text="@string/_299_43"
                 android:textColor="@color/appcolor"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                />
 
             <LinearLayout

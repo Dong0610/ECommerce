@@ -8,19 +8,22 @@ import dong.duan.ecommerce.adapter.user.FilterComment
 import dong.duan.ecommerce.adapter.user.FilterCommentAdapter
 import dong.duan.ecommerce.adapter.user.OnFilterCommentSelect
 import dong.duan.ecommerce.databinding.FragmentReviewProductBinding
+import dong.duan.ecommerce.fragment.main.HomeFragment
+import dong.duan.ecommerce.library.formatTime
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductReview
 import dong.duan.ecommerce.utility.Constant
+import java.util.Date
 
-class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewProductBinding>() {
+class ReviewProductFragment(var product: Product) : BaseFragment<FragmentReviewProductBinding>() {
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )=FragmentReviewProductBinding.inflate(layoutInflater,container,false)
+    ) = FragmentReviewProductBinding.inflate(layoutInflater, container, false)
 
 
-    var listComment= mutableListOf<ProductReview>()
+    var listComment = mutableListOf<ProductReview>()
 
     override fun initView() {
 
@@ -29,32 +32,42 @@ class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewPro
         }
 
         getAllComment {
-            listComment=it
+            listComment = it
             initRcv(it)
         }
+
+        FragmentWriteReview.onCommentSuccess(object :OnCommentSuccess{
+            override fun OnSuccess() {
+                getAllComment {
+                    listComment = it
+                    initRcv(it)
+                }
+            }
+
+        })
     }
 
 
-    fun getAllComment(calback: (MutableList<ProductReview>)->Unit){
-        val listData= mutableListOf<ProductReview>()
+    fun getAllComment(calback: (MutableList<ProductReview>) -> Unit) {
+        val listData = mutableListOf<ProductReview>()
         firestore.collection(Constant.KEY_REVIEW)
             .get()
-            .addOnCompleteListener { task->
-                if(task.isSuccessful){
-                    task.result.documents.forEach { doc->
-                        val review= ProductReview().apply {
-                            reviewId= doc.id
-                            reviewComment= doc.getString(Constant.REVIEW_COMMERNT) ?:""
-                            productID
-                            reviewImg= doc[Constant.REVIEW_IMG] as? ArrayList<Any> ?: null
-                            reviewUserId =doc[Constant.REVIEW_USER_ID].toString()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result.documents.forEach { doc ->
+                        val review = ProductReview().apply {
+                            reviewId = doc.id
+                            reviewComment = doc.getString(Constant.REVIEW_COMMERNT) ?: ""
+                            productID = doc.getString(Constant.REVIEW_PR_ID) ?: ""
+                            reviewImg = doc[Constant.REVIEW_IMG] as? ArrayList<Any> ?: null
+                            reviewUserId = doc[Constant.REVIEW_USER_ID].toString()
                             reviewUserName = doc[Constant.REVIEW_USER_NAME].toString()
-                            reviewUserImg= doc[Constant.REVIEW_USER_IMG].toString()
+                            reviewUserImg = doc[Constant.REVIEW_USER_IMG].toString()
                             reviewStar = doc[Constant.REVIEW_STAR].toString().toFloat()
                             reviewComment = doc[Constant.REVIEW_COMMERNT].toString()
-                            reviewTime = (doc[Constant.REVIEW_TIME]).toString()
+                            reviewTime = formatTime(doc.getDate(Constant.REVIEW_TIME) as Date)
                         }
-                        if(review.productID.equals(product.id)){
+                        if (review.productID.equals(product.id)) {
                             listData.add(review)
                         }
                     }
@@ -67,14 +80,14 @@ class ReviewProductFragment(var product: Product):BaseFragment<FragmentReviewPro
 
 
     private fun initRcv(reviews: MutableList<ProductReview>) {
-        binding.rcvColection.adapter= FilterCommentAdapter(object : OnFilterCommentSelect {
+        binding.rcvColection.adapter = FilterCommentAdapter(object : OnFilterCommentSelect {
             override fun onSelect(filterComment: FilterComment) {
 
             }
         })
 
-        val allcommentAdapter= AllCommentAdapter(requireContext())
-        binding.rcvListComment.adapter=allcommentAdapter
+        val allcommentAdapter = AllCommentAdapter(this.requireContext())
+        binding.rcvListComment.adapter = allcommentAdapter
         allcommentAdapter.setItems(reviews)
 
         binding.btnWiteComment.setOnClickListener {

@@ -1,6 +1,8 @@
 package dong.duan.ecommerce.activity.account
 
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.activity.home.MainActivity
 import dong.duan.ecommerce.admin.AdminActivity
@@ -9,6 +11,7 @@ import dong.duan.ecommerce.databinding.ActivitySignInBinding
 import dong.duan.ecommerce.library.log
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.utility.Constant
+
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     override fun getViewBinding() = ActivitySignInBinding.inflate(layoutInflater)
@@ -45,6 +48,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     private fun signIntoApp() {
+        loadding.show()
         firestore.collection(Constant.KEY_USER)
             .whereEqualTo(Constant.USER_EMAIL,email)
             .whereEqualTo(Constant.USER_PASS,pass)
@@ -89,21 +93,39 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
                                        remoteUser.id
                                     )
                                     putString(Constant.SHOP_COUTN_PR, "0")
-                                    startActivity(
-                                        Intent(
-                                            this@SignInActivity,
-                                            AdminActivity::class.java
-                                        ).apply {
-                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                        })
-                                    finish()
+
+                                    Handler(Looper.myLooper()!!)
+                                        .postDelayed({
+                                            loadding.dismiss()
+                                            startActivity(
+                                                Intent(
+                                                    this@SignInActivity,
+                                                    AdminActivity::class.java
+                                                ).apply {
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                })
+                                            finish()
+                                        },1200)
+
+
                                 }
                             }
 
                     }
                     else{
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                        Handler(Looper.myLooper()!!)
+                            .postDelayed({
+                                loadding.dismiss()
+                                startActivity(
+                                    Intent(
+                                        this@SignInActivity,
+                                        MainActivity::class.java
+                                    ).apply {
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    })
+                                finish()
+                            },1200)
+
                     }
                 }
             }.addOnFailureListener { e->

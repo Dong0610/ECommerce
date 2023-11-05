@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.databinding.ItemAdminProductBinding
 import dong.duan.ecommerce.model.Product
+import dong.duan.ecommerce.utility.formatToCurrency
 
 class AdminProductAdapter(var onCardEvent: OnCardAdminEvent) :BaseAdapter<Product,ItemAdminProductBinding>() {
     override fun createBinding(
@@ -19,10 +20,10 @@ class AdminProductAdapter(var onCardEvent: OnCardAdminEvent) :BaseAdapter<Produc
     override fun bind(binding: ItemAdminProductBinding, item: Product, position: Int) {
         binding.txtName.setText(item.name)
         Glide.with(binding.root).load(item.imageUrl!!.get(0)).into(binding.imgProduct)
-        binding.txtPrice.text= item.price.toString()
+        binding.txtPrice.text= formatToCurrency(item.price)
         binding.txtSale.text= item.saleOff.toString()+"%"
         binding.txtNumCount.setText(item.count.toString())
-        binding.txtTarget.text= (item.price - (item.price*item.saleOff/100)).toString()
+        binding.txtTarget.text= formatToCurrency(item.price - (item.price*item.saleOff/100))
         binding.icEdit.setOnClickListener {
             onCardEvent.editProduct(item)
         }

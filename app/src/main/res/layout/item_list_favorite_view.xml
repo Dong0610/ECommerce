@@ -20,7 +20,7 @@
     <TextView
         android:maxLines="2"
         android:textColor="#223263"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:fontFamily="@font/worksans_semi_bold"
         android:id="@+id/txt_name"
@@ -39,7 +39,7 @@
     <TextView
         android:maxLines="1"
         android:textColor="@color/appcolor"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:fontFamily="@font/worksans_semi_bold"
         android:id="@+id/txt_price"
@@ -57,7 +57,7 @@
             android:maxLines="1"
             android:layout_weight="1"
             android:textColor="@color/appcolor"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/worksans_semi_bold"
             android:id="@+id/txt_discount"
             android:text="@string/_299_43"
@@ -80,7 +80,7 @@
                 android:maxLines="1"
                 android:text="@string/_24_off"
                 android:textColor="#FB7181"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_11sdp"
                 app:layout_constraintEnd_toStartOf="@+id/icdelete"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlHardcoded" />

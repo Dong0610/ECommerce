@@ -150,6 +150,7 @@ class AdminOrderFragment : BaseFragment<FragmentOrderAdminBinding>() {
         binding.txtSumOrder.text = orderItem.size.toString() + " đơn hàng"
     }
 
+    var first_cancel = 0
     @SuppressLint("SetTextI18n")
     private fun orderView(order: Order) {
         fun received() {
@@ -218,6 +219,7 @@ class AdminOrderFragment : BaseFragment<FragmentOrderAdminBinding>() {
                     .addOnCompleteListener {
                         show_toast("Chuyển trạng thái thành công")
                         orderView(order)
+                        setDataToView(listOrderData)
                     }
 
             }
@@ -228,21 +230,30 @@ class AdminOrderFragment : BaseFragment<FragmentOrderAdminBinding>() {
                     .addOnCompleteListener {
                         show_toast("Chuyển trạng thái thành công")
                         orderView(order)
+                        setDataToView(listOrderData)
                     }
             }
             binding.include.btnCancelOrder.setOnClickListener {
-                binding.include.llCancelBill.visibility = View.GONE
-                val value = binding.include.txtCancelOrdrer.text.toString()
-                if (value.equals("")) {
-                    show_toast("Thêm lí do hủy đơn")
-                } else {
-                    firestore.collection(Constant.KEY_ORDER)
-                        .document(order.orderID)
-                        .update(Constant.ORDER_STATUS, OrderStatus.REJECT)
-                        .addOnCompleteListener {
-                            show_toast("Đã hủy đơn hàng")
-                            orderView(order)
-                        }
+                if (first_cancel == 0) {
+                    binding.include.llCancelBill.visibility = View.VISIBLE
+                    first_cancel = 1
+                    binding.include.txtP3.text = "Xác nhận"
+                } else if (first_cancel == 1) {
+                    val value = binding.include.txtCancelOrdrer.text.toString()
+                    if (value.equals("")) {
+                        show_toast("Thêm lí do hủy đơn")
+                    } else {
+                        firestore.collection(Constant.KEY_ORDER)
+                            .document(order.orderID)
+                            .update(Constant.ORDER_STATUS, OrderStatus.REJECT)
+                            .addOnCompleteListener {
+                                show_toast("Đã hủy đơn hàng")
+                                received()
+                                first_cancel = 0
+                                setDataToView(listOrderData)
+
+                            }
+                    }
                 }
             }
         }

@@ -8,11 +8,12 @@ import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import dong.duan.ecommerce.R
+import java.text.NumberFormat
+import java.util.Locale
 
 
 enum class OrderStatus {
@@ -182,6 +183,7 @@ class CustomConstrainLayout @JvmOverloads constructor(
         val backgroundDrawable = background as? GradientDrawable
         backgroundDrawable?.cornerRadius = radius
     }
+
     fun setBackground(color: Int) {
         backgroundColor = color
         val backgroundDrawable = GradientDrawable()
@@ -224,7 +226,6 @@ class CustomConstrainLayout @JvmOverloads constructor(
 }
 
 
-
 class CheckBoxImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -243,11 +244,11 @@ class CheckBoxImageView @JvmOverloads constructor(
         }
     }
 
-     fun isChecked(): Boolean {
+    fun isChecked(): Boolean {
         return checked
     }
 
-     fun setChecked(checked: Boolean) {
+    fun setChecked(checked: Boolean) {
         this.checked = checked // Use "=" instead of "!="
         setImageResource(if (isChecked()) checkedImageRes else defImageRes)
     }
@@ -280,4 +281,10 @@ class CheckBoxImageView @JvmOverloads constructor(
     interface OnCheckedChangeListener {
         fun onCheckedChanged(buttonView: View?, isChecked: Boolean)
     }
+}
+
+fun formatToCurrency(value: Float): String {
+    val locale = Locale("vi", "VN") // Set the Vietnamese locale
+    val currencyFormat = NumberFormat.getCurrencyInstance(locale)
+    return currencyFormat.format(value)
 }

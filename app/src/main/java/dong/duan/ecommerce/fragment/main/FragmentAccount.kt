@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
+import dong.duan.ecommerce.activity.AddDataActivity
 import dong.duan.ecommerce.activity.SplashActivity
 import dong.duan.ecommerce.databinding.FragmentAccountBinding
 import dong.duan.ecommerce.fragment.other.FragmentAddress
+import dong.duan.ecommerce.fragment.other.FragmentCardManager
 import dong.duan.ecommerce.fragment.other.FragmentCreditCard
 import dong.duan.ecommerce.fragment.other.FragmentOrder
 import dong.duan.ecommerce.fragment.other.UpdateProfileFragment
@@ -22,7 +24,6 @@ class FragmentAccount : BaseFragment<FragmentAccountBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentAccountBinding.inflate(layoutInflater)
-
     var isProfileDetail = true
     override fun initView() {
         binding.llProfile.setOnClickListener {
@@ -36,21 +37,16 @@ class FragmentAccount : BaseFragment<FragmentAccountBinding>() {
                 isProfileDetail = true
             }
         }
-
         initProfile()
-
         setProfileDetail()
     }
-
     private fun initProfile() {
         binding.txtName.text = sharedPreferences.getString(Constant.USER_NAME)
         binding.txtGender.text = sharedPreferences.getString(Constant.USER_GENDER).toString()
         binding.txtBirthday.text = sharedPreferences.getString(Constant.USER_BIRTHDAY).toString()
-
         binding.txtEmail.text = sharedPreferences.getString(Constant.USER_EMAIL).toString()
         binding.txtPhoneNum.text = sharedPreferences.getString(Constant.USER_PHONE).toString()
         binding.txtPassW.text = "******"
-
         binding.txtIdUsers.setOnClickListener {
             show_toast("Đăng xuất thành công")
             android.os.Handler(Looper.myLooper()!!)
@@ -59,12 +55,13 @@ class FragmentAccount : BaseFragment<FragmentAccountBinding>() {
                     sharedPreferences.putBollean(Constant.KEY_SHOP_INIT, false)
                     sharedPreferences.clear()
                     startActivity(Intent(this.requireContext(), SplashActivity::class.java))
-
                 }, 1500L)
         }
     }
-
     private fun setProfileDetail() {
+        binding.imgUsers.setOnClickListener {
+            startActivity(Intent(this.requireContext(),AddDataActivity::class.java))
+        }
         binding.llgender.setOnClickListener {
             replaceFullViewFragment(UpdateProfileFragment(UpdateType.UPDATE_GENDER), true)
         }
@@ -83,12 +80,14 @@ class FragmentAccount : BaseFragment<FragmentAccountBinding>() {
         binding.llbirthday.setOnClickListener {
             replaceFullViewFragment(UpdateProfileFragment(UpdateType.UPDATE_BIRTHDAY), true)
         }
-
         binding.llOder.setOnClickListener {
             replaceFullViewFragment(FragmentOrder(), true)
         }
         binding.llAdress.setOnClickListener {
             replaceFullViewFragment(FragmentAddress(), true)
+        }
+        binding.llPayment.setOnClickListener {
+            replaceFullViewFragment(FragmentCreditCard(), true)
         }
     }
 }
