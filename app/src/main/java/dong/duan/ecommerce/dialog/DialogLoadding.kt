@@ -1,15 +1,12 @@
 package dong.duan.ecommerce.dialog
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageView
 import dong.duan.ecommerce.R
-import dong.duan.ecommerce.databinding.DialogAppLoaddingBinding
-import dong.duan.ecommerce.databinding.DialogAppSuccessBinding
 import dong.duan.ecommerce.library.base.BaseDialog
-import dong.duan.ecommerce.library.rotate
-import android.animation.ObjectAnimator
 
 @SuppressLint("MissingInflatedId")
 class DialogLoadding (context: Context): BaseDialog(context) {

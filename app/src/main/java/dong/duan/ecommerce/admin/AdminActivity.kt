@@ -7,21 +7,13 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.activity.AddDataActivity
-import dong.duan.ecommerce.activity.SplashActivity
 import dong.duan.ecommerce.databinding.ActivitySalerBinding
-import dong.duan.ecommerce.interfaces.OnAdminData
 import dong.duan.ecommerce.interfaces.OnUpdateProductCount
-import dong.duan.ecommerce.library.OnPutImageListener
 import dong.duan.ecommerce.library.base.BaseActivity
-import dong.duan.ecommerce.library.log
-import dong.duan.ecommerce.library.putImgToStorage
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
-import dong.duan.ecommerce.library.uri_from_drawable
-import dong.duan.ecommerce.model.Manufacturer
 import dong.duan.ecommerce.model.Order
 import dong.duan.ecommerce.utility.Constant
-import dong.duan.ecommerce.utility.InitData
 import java.util.Date
 
 class AdminActivity : BaseActivity<ActivitySalerBinding>(), OnUpdateProductCount {

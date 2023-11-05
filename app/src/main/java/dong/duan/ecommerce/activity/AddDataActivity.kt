@@ -1,14 +1,14 @@
 package dong.duan.ecommerce.activity
 
-import dong.duan.ecommerce.R
 import dong.duan.ecommerce.databinding.ActivityAddDataBinding
 import dong.duan.ecommerce.library.OnPutImageListener
 import dong.duan.ecommerce.library.base.BaseActivity
 import dong.duan.ecommerce.library.log
+import dong.duan.ecommerce.library.putImgToStorage
 import dong.duan.ecommerce.library.show_toast
+import dong.duan.ecommerce.library.uri_from_drawable
 import dong.duan.ecommerce.library.url_to_string
 import dong.duan.ecommerce.model.Manufacturer
-import dong.duan.ecommerce.model.ManufacturerPut
 import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductSize
 import dong.duan.ecommerce.model.ShopManager
@@ -16,9 +16,6 @@ import dong.duan.ecommerce.model.User
 import dong.duan.ecommerce.utility.Constant
 import dong.duan.ecommerce.utility.InitData
 import java.util.Date
-import dong.duan.ecommerce.library.putImgToStorage
-import dong.duan.ecommerce.library.uri_from_drawable
-import dong.duan.ecommerce.model.PaymendMethod
 
 class AddDataActivity : BaseActivity<ActivityAddDataBinding>() {
     override fun getViewBinding() = ActivityAddDataBinding.inflate(layoutInflater)

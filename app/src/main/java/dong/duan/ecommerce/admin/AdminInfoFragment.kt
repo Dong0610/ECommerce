@@ -9,19 +9,17 @@ import com.bumptech.glide.Glide
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.activity.SplashActivity
 import dong.duan.ecommerce.databinding.FragmentAdminInfoBinding
-import dong.duan.ecommerce.fragment.other.FragmentAddress
-import dong.duan.ecommerce.fragment.other.FragmentOrder
 import dong.duan.ecommerce.fragment.other.UpdateProfileFragment
 import dong.duan.ecommerce.fragment.other.UpdateType
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.utility.Constant
 
-class AdminInfoFragment:BaseFragment<FragmentAdminInfoBinding>() {
+class AdminInfoFragment : BaseFragment<FragmentAdminInfoBinding>() {
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )=FragmentAdminInfoBinding.inflate(layoutInflater)
+    ) = FragmentAdminInfoBinding.inflate(layoutInflater)
 
     var isProfileDetail = true
     override fun initView() {
@@ -41,11 +39,12 @@ class AdminInfoFragment:BaseFragment<FragmentAdminInfoBinding>() {
     }
 
     private fun initProfile() {
-        binding.txtShopname.text= sharedPreferences.getString(Constant.SHOP_NAME)
+        binding.txtShopname.text = sharedPreferences.getString(Constant.SHOP_NAME)
         binding.txtName.text = sharedPreferences.getString(Constant.USER_NAME)
         binding.txtGender.text = sharedPreferences.getString(Constant.USER_GENDER).toString()
         binding.txtBirthday.text = sharedPreferences.getString(Constant.USER_BIRTHDAY).toString()
-        Glide.with(binding.root).load(sharedPreferences.getString(Constant.SHOP_IMG_URL)).into(binding.imgUsers)
+        Glide.with(binding.root).load(sharedPreferences.getString(Constant.SHOP_IMG_URL))
+            .into(binding.imgUsers)
         binding.txtEmail.text = sharedPreferences.getString(Constant.USER_EMAIL).toString()
         binding.txtPhoneNum.text = sharedPreferences.getString(Constant.USER_PHONE).toString()
         binding.txtPassW.text = "******"

@@ -3,7 +3,6 @@ package dong.duan.ecommerce.library
 import android.content.ContentResolver
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 

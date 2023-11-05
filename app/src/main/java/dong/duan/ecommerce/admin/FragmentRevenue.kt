@@ -5,11 +5,7 @@ import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import dong.duan.ecommerce.adapter.admin.OrderCountAdapter
 import dong.duan.ecommerce.databinding.FragmentRevenueBinding
-import dong.duan.ecommerce.interfaces.OnAdminData
-import dong.duan.ecommerce.library.show_toast
-import dong.duan.ecommerce.model.Order
 import dong.duan.ecommerce.model.OrderData
-import dong.duan.ecommerce.utility.OrderStatus
 
 class FragmentRevenue : BaseFragment<FragmentRevenueBinding>() {
     override fun getBinding(

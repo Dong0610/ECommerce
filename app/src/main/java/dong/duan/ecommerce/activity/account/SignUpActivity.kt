@@ -2,8 +2,8 @@ package dong.duan.ecommerce.activity.account
 
 import android.content.Intent
 import dong.duan.ecommerce.activity.AccountTypeActivity
-import dong.duan.ecommerce.library.base.BaseActivity
 import dong.duan.ecommerce.databinding.ActivitySignUpBinding
+import dong.duan.ecommerce.library.base.BaseActivity
 import dong.duan.ecommerce.library.check_email
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast

@@ -2,7 +2,6 @@ package dong.duan.ecommerce.library
 
 import android.content.Context
 import android.content.SharedPreferences
-import dong.duan.ecommerce.library.AppContext
 
 class SharedPreference {
     private val sharedPreferences: SharedPreferences =

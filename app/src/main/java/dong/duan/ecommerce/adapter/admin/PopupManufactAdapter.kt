@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
-import dong.duan.ecommerce.databinding.ItemAdminProductBinding
 import dong.duan.ecommerce.databinding.ItemManafactViewBinding
 import dong.duan.ecommerce.model.Manufacturer
-import dong.duan.ecommerce.model.Product
 
 class PopupManufactAdapter (var onPopupCalback: OnPopupCalback) :
     BaseAdapter<Manufacturer, ItemManafactViewBinding>() {
