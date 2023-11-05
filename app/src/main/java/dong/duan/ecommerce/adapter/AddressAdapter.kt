@@ -8,15 +8,18 @@ import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
 import dong.duan.ecommerce.dialog.DialogWaring
-import dong.duan.ecommerce.fragment.other.FragmentEditAddress
 import dong.duan.ecommerce.model.Address
 
-class AddressAdapter (var context:Context,var type:Boolean =false,var onAddressSelect: OnAddressSelect):BaseAdapter<Address,ItemShiptoAdressViewBinding>() {
+class AddressAdapter(
+    var context: Context,
+    var type: Boolean = false,
+    var onAddressSelect: OnAddressSelect
+) : BaseAdapter<Address, ItemShiptoAdressViewBinding>() {
     override fun createBinding(
         inflater: LayoutInflater,
         parent: ViewGroup,
         viewType: Int
-    )=ItemShiptoAdressViewBinding .inflate(inflater,parent,false)
+    ) = ItemShiptoAdressViewBinding.inflate(inflater, parent, false)
 
     override fun bind(itembinding: ItemShiptoAdressViewBinding, adress: Address, position: Int) {
         itembinding.icDelete.setOnClickListener {
@@ -24,39 +27,37 @@ class AddressAdapter (var context:Context,var type:Boolean =false,var onAddressS
                 onAddressSelect.onDelete(adress)
             }.show()
         }
-        if(type){
-            itembinding.icDelete.visibility= View.VISIBLE
+        if (type) {
+            itembinding.icDelete.visibility = View.VISIBLE
+        } else {
+            itembinding.icDelete.visibility = View.GONE
         }
-        else{
-            itembinding.icDelete.visibility= View.GONE
-        }
-        if(position==currentPosition){
+        if (position == currentPosition) {
             itembinding.root.setBackgroundResource(R.drawable.bg_edt_account_end)
-        }
-        else{
+        } else {
             itembinding.root.setBackgroundResource(R.drawable.bg_edt_account_dis)
         }
-        itembinding.txtAdrName.text= adress.remindName
+        itembinding.txtAdrName.text = adress.remindName
         itembinding.txtAdrDetail.text = adress.location
         itembinding.txtNumPhone.text = adress.phoneNumber
         itembinding.btnEditAddress.setOnClickListener {
             onAddressSelect.onEditData(adress);
         }
         itembinding.root.setOnClickListener {
-            onAddressSelect.onSelected(adress,position)
+            onAddressSelect.onSelected(adress, position)
         }
     }
 
-    fun  setItem(position:Int){
+    fun setItem(position: Int) {
         notifyItemChanged(position)
         notifyItemChanged(currentPosition)
-        currentPosition=position;
+        currentPosition = position;
     }
 
 }
 
-interface  OnAddressSelect{
-    fun onSelected(address: Address,i:Int)
+interface OnAddressSelect {
+    fun onSelected(address: Address, i: Int)
     fun onEditData(address: Address)
     fun onDelete(address: Address)
 }

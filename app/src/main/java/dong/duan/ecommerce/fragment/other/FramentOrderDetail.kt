@@ -55,7 +55,7 @@ class FramentOrderDetail(var order: Order) : BaseFragment<FragmentOrderDetailBin
             binding.txtPrice.text = order.productPrice.toString() + " $"
             binding.txtTotalPrice.text =
                 (order.productCount * order.productPrice).toString() + "$"
-            if(order.orderStatus.equals("REJECT")|| order.orderStatus.equals("RECEIVED")){
+            if (order.orderStatus.equals("REJECT") || order.orderStatus.equals("RECEIVED")) {
                 cancelOk()
             }
         }
@@ -88,6 +88,7 @@ class FramentOrderDetail(var order: Order) : BaseFragment<FragmentOrderDetailBin
             }
         }
     }
+
     fun cancelOk() {
         binding.btnCancelOrder.isEnabled = false
         binding.btnCancelOrder.setStrokeColor(Color.parseColor("#d5d5d5"))

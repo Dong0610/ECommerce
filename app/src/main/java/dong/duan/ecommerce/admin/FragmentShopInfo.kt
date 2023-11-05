@@ -33,7 +33,7 @@ class FragmentShopInfo : BaseFragment<FragmentShopInfoBinding>() {
         binding.edtShopName.setText(sharedPreferences.getString(Constant.SHOP_NAME))
         Glide.with(binding.root).load(sharedPreferences.getString(Constant.SHOP_IMG_URL).toString())
             .into(binding.imgShop)
-        binding.icBack.setOnClickListener{
+        binding.icBack.setOnClickListener {
             closeFragment(this)
         }
 
@@ -79,8 +79,8 @@ class FragmentShopInfo : BaseFragment<FragmentShopInfoBinding>() {
             chooseImage()
         }
         binding.btnSaveImg.setOnClickListener {
-            if(imageUri!=null){
-                putImage(imageUri!!){
+            if (imageUri != null) {
+                putImage(imageUri!!) {
                     firestore.collection(Constant.KEY_SHOP)
                         .document(sharedPreferences.getString(Constant.SHOP_ID).toString())
                         .update(Constant.SHOP_IMG_URL, it)
@@ -91,8 +91,7 @@ class FragmentShopInfo : BaseFragment<FragmentShopInfoBinding>() {
                             show_toast(it.message.toString())
                         }
                 }
-            }
-            else{
+            } else {
                 show_toast("Ảnh mới chưa được chọn!")
             }
         }

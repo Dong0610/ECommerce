@@ -1,20 +1,17 @@
 package android.dongdong.kotlin_library.notification
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import dong.duan.ecommerce.R
 import dong.duan.ecommerce.library.AppContext
 import java.util.Calendar
+
 fun show_notification(title: String = "Notification", notification: Any, icon: Int = R.mipmap.ic_launcher,noti_id:Int =0) {
     val builder = NotificationCompat.Builder(AppContext.context, "channelId")
         .setSmallIcon(icon)

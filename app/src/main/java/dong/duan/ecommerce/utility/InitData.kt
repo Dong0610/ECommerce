@@ -1,8 +1,6 @@
 package dong.duan.ecommerce.utility
 
 import dong.duan.ecommerce.R
-import dong.duan.ecommerce.library.Colors
-import dong.duan.ecommerce.model.CreditCard
 import dong.duan.ecommerce.model.ManufacturerPut
 import dong.duan.ecommerce.model.PaymendMethod
 

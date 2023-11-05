@@ -1,7 +1,6 @@
 package dong.duan.ecommerce.fragment.other
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 import com.google.firebase.database.DataSnapshot
@@ -10,14 +9,10 @@ import com.google.firebase.database.ValueEventListener
 import dong.duan.ecommerce.adapter.AddressAdapter
 import dong.duan.ecommerce.adapter.OnAddressSelect
 import dong.duan.ecommerce.databinding.FragmentAdressBinding
-import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
-import dong.duan.ecommerce.dialog.DialogWaring
-import dong.duan.ecommerce.library.GenericAdapter
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Address
 import dong.duan.ecommerce.utility.Constant
-import dong.duan.ecommerce.utility.InitData
 
 class FragmentAddress : BaseFragment<FragmentAdressBinding>() {
     override fun getBinding(

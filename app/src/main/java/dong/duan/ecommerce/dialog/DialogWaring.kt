@@ -3,7 +3,6 @@ package dong.duan.ecommerce.dialog
 import android.content.Context
 import android.view.View
 import dong.duan.ecommerce.databinding.DialogAppWaringBinding
-import dong.duan.ecommerce.library.AppContext
 import dong.duan.ecommerce.library.base.BaseDialog
 
 class DialogWaring(mess:String?=null,context: Context, onBack:()->Unit):BaseDialog(context) {

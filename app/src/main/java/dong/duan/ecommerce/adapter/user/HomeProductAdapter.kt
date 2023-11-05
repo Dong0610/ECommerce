@@ -1,13 +1,10 @@
 package dong.duan.ecommerce.adapter.user
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.RatingBar
 import com.bumptech.glide.Glide
 import com.mobiai.base.basecode.adapter.BaseAdapter
 import dong.duan.ecommerce.databinding.ItemListProductViewBinding

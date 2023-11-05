@@ -3,11 +3,10 @@ package dong.duan.ecommerce.activity.account
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import dong.duan.ecommerce.R
 import dong.duan.ecommerce.activity.home.MainActivity
 import dong.duan.ecommerce.admin.AdminActivity
-import dong.duan.ecommerce.library.base.BaseActivity
 import dong.duan.ecommerce.databinding.ActivitySignInBinding
+import dong.duan.ecommerce.library.base.BaseActivity
 import dong.duan.ecommerce.library.log
 import dong.duan.ecommerce.library.sharedPreferences
 import dong.duan.ecommerce.utility.Constant

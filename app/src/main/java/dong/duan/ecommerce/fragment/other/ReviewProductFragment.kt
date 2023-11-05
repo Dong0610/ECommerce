@@ -8,7 +8,6 @@ import dong.duan.ecommerce.adapter.user.FilterComment
 import dong.duan.ecommerce.adapter.user.FilterCommentAdapter
 import dong.duan.ecommerce.adapter.user.OnFilterCommentSelect
 import dong.duan.ecommerce.databinding.FragmentReviewProductBinding
-import dong.duan.ecommerce.fragment.main.HomeFragment
 import dong.duan.ecommerce.library.formatTime
 import dong.duan.ecommerce.library.show_toast
 import dong.duan.ecommerce.model.Product

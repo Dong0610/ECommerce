@@ -10,7 +10,6 @@ import dong.duan.ecommerce.activity.AddDataActivity
 import dong.duan.ecommerce.activity.SplashActivity
 import dong.duan.ecommerce.databinding.FragmentAccountBinding
 import dong.duan.ecommerce.fragment.other.FragmentAddress
-import dong.duan.ecommerce.fragment.other.FragmentCardManager
 import dong.duan.ecommerce.fragment.other.FragmentCreditCard
 import dong.duan.ecommerce.fragment.other.FragmentOrder
 import dong.duan.ecommerce.fragment.other.UpdateProfileFragment

@@ -20,13 +20,10 @@ import dong.duan.ecommerce.adapter.user.CardAdapter
 import dong.duan.ecommerce.adapter.user.OnCardEvent
 import dong.duan.ecommerce.databinding.FragmentCartBinding
 import dong.duan.ecommerce.databinding.FragmentShipToBinding
-import dong.duan.ecommerce.databinding.ItemShiptoAdressViewBinding
 import dong.duan.ecommerce.databinding.PopupSelectManufactBinding
 import dong.duan.ecommerce.dialog.DialogSuccess
-import dong.duan.ecommerce.dialog.DialogWaring
 import dong.duan.ecommerce.fragment.other.FragmentEditAddress
 import dong.duan.ecommerce.fragment.other.ProductFragment
-import dong.duan.ecommerce.library.GenericAdapter
 import dong.duan.ecommerce.library.base.BasePopupLocation
 import dong.duan.ecommerce.library.data.MyDatabaseHelper
 import dong.duan.ecommerce.library.formatTime
@@ -40,7 +37,6 @@ import dong.duan.ecommerce.model.ProductSize
 import dong.duan.ecommerce.utility.Constant
 import dong.duan.ecommerce.utility.OrderStatus
 import dong.duan.ecommerce.utility.formatToCurrency
-import java.text.FieldPosition
 import java.util.Date
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {

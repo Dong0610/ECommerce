@@ -3,7 +3,6 @@ package dong.duan.ecommerce.adapter.user
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.egame.backgrounderaser.aigenerator.base.BaseFragment
 
