@@ -87,13 +87,12 @@ class UpdateProfileFragment(var updateType: UpdateType) :
             binding.edtBirthday.setText(formattedDate)
         }
         binding.btnUpdateBirthday.setOnClickListener {
-
             firestore.collection(Constant.KEY_USER)
                 .document(sharedPreferences.getString(Constant.USER_ID).toString())
                 .update(Constant.USER_BIRTHDAY, binding.edtBirthday.text.toString())
                 .addOnCompleteListener {
                     sharedPreferences.putString(
-                        Constant.USER_PHONE,
+                        Constant.USER_BIRTHDAY,
                         binding.edtBirthday.text.toString()
                     )
                     show_toast("Thành công")
@@ -205,6 +204,14 @@ class UpdateProfileFragment(var updateType: UpdateType) :
                     }
             }
         }
+        database.getReference(Constant.KEY_NOTIFICATION)
+            .child(sharedPreferences.getString(Constant.USER_ID) ?:"")
+            .setValue(Constant.USER_ADDRESS,binding.edtBirthday.text.toString())
+            .addOnCompleteListener {
+
+            }.addOnFailureListener {
+
+            }
     }
 
     private fun initUpdateEmail() {

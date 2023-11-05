@@ -21,23 +21,35 @@
     <TextView
         android:maxLines="2"
         android:textColor="#223263"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:fontFamily="@font/worksans_semi_bold"
         android:id="@+id/txt_name"
         android:text="@string/fs_nike_air_max_270_react"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <RatingBar
+        android:id="@+id/rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.2"
+        android:isIndicator="true"/>
+
     <TextView
         android:maxLines="1"
         android:textColor="@color/appcolor"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:fontFamily="@font/worksans_semi_bold"
         android:id="@+id/txt_price"
         android:text="@string/_299_43"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_marginTop="@dimen/_6sdp"
         android:orientation="horizontal"
@@ -48,7 +60,7 @@
             android:maxLines="1"
             android:layout_weight="1"
             android:textColor="@color/appcolor"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_11sdp"
             android:fontFamily="@font/worksans_semi_bold"
             android:id="@+id/txt_discount"
             android:text="@string/_299_43"
@@ -58,8 +70,9 @@
             android:layout_gravity="end"
             android:layout_weight="1"
             android:maxLines="1"
+            android:gravity="right"
             android:textColor="#FB7181"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_10sdp"
             android:fontFamily="@font/worksans_semi_bold"
             android:id="@+id/txt_sale"
             android:text="@string/_24_off"

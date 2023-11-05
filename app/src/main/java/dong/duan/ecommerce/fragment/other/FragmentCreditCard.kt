@@ -19,19 +19,7 @@ class FragmentCreditCard : BaseFragment<FragmentCreditCardBinding>() {
 
     var adapterCard: GenericAdapter<CreditCard,ItemListCreditCardBinding>?= null
     override fun initView() {
-        adapterCard = GenericAdapter(InitData.listcrediCard,ItemListCreditCardBinding::inflate){
-            itembinding, creditCard, i ->
-            itembinding.llColor.setBackgroundColor(creditCard.color)
-            itembinding.txtCardName.text= creditCard.carName
-            itembinding.txtNumCard.text= creditCard.cardNumber
-            Glide.with(requireContext()).load(creditCard.imgCard).into(itembinding.imgBankingApp)
-            itembinding.txtEndate.text=creditCard.endDate
-            itembinding.txtHolder.text= creditCard.holder
-            itembinding.root.setOnClickListener {
-                replaceFullViewFragment(FragmentCardManager(creditCard),true)
-            }
 
-        }
         binding.icAddAdress.setOnClickListener {
             replaceFullViewFragment(FragmentCardManager(null),true)
         }

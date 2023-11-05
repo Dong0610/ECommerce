@@ -38,7 +38,6 @@ object Constant {
 
 
     val KEY_PRODUCT= "Product"
-    val PRODUCT_ID = "product_id"
     val PRODUCT_NAME = "product_name"
     val PRODUCT_SIZE = "product_size"
     val PRODUCT_PRICE = "product_price"
@@ -55,6 +54,9 @@ object Constant {
     val PRODUCT_DESCRIBLE = "product_describle"
     val PRODUCT_STYLE = "product_style"
     val PRODUCT_EVALUATION = "product_evaluation"
+    val PRODUCT_TAX = "product_tax"
+    val PRODUCT_TRANSMONEY = "product_transmoney"
+    val PRODUCT_COUNTBUY = "product_count_buy"
 
 
 
@@ -70,6 +72,8 @@ object Constant {
     val CART_PRODUCT_COUNT= "cart_pr_count"
     val CART_PRODUCT_ISBUY= "cart_pr_buy"
     val CART_PRODUCT_SHOP_ID ="cart_shop_id"
+    val CART_PRODUCT_TAX= "cart_pr_tax"
+    val CART_PRODUCT_TRANSMN ="cart_shop_money_trans"
 
 
     var KEY_ORDER = "Order"
@@ -99,6 +103,7 @@ object Constant {
     var NOTI_VALUE= "noti_value"
     var NOTI_TIME= "noti_time"
     var NOTI_PR_ID= "noti_pr_id"
+    var NOTI_OD_ID="noti_pr_id"
 
 
     var KEY_REVIEW= "ReviewProduct"

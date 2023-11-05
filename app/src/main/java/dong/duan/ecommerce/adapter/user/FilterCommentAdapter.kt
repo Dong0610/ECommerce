@@ -23,7 +23,6 @@ class FilterCommentAdapter(var onFilterCommentSelect: OnFilterCommentSelect):Rec
       @SuppressLint("NotifyDataSetChanged", "ResourceAsColor")
       fun setData(filterComment: FilterComment){
           if(currentSlected==position){
-
               binding.root.setBackgroundResource(R.drawable.bg_item_comment_select)
           }
           else{

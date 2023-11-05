@@ -58,7 +58,7 @@
             android:maxLines="2"
             android:text="@string/fs_nike_air_max_270_react"
             android:textColor="#223263"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/ic_edit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +81,7 @@
                 android:maxLines="1"
                 android:text="@string/_299_43"
                 android:textColor="@color/appcolor"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_11sdp" />
 
             <TextView
                 android:id="@+id/txt_sale"
@@ -93,7 +93,7 @@
                 android:maxLines="1"
                 android:text="@string/_24_off"
                 android:textColor="#FB7181"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_11sdp" />
         </LinearLayout>
 
 
@@ -109,7 +109,7 @@
 
             <TextView
                 android:id="@+id/txt_target"
-                android:layout_width="match_parent"
+                android:layout_width="161dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -117,7 +117,7 @@
                 android:maxLines="1"
                 android:text="@string/_299_43"
                 android:textColor="@color/appcolor"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_11sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

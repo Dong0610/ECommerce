@@ -27,8 +27,8 @@ import java.util.Date
 class AdminActivity : BaseActivity<ActivitySalerBinding>(), OnUpdateProductCount {
     override fun getViewBinding() = ActivitySalerBinding.inflate(layoutInflater)
 
-    companion object{
-      var listOrder = mutableListOf<Order>()
+    companion object {
+        var listOrder = mutableListOf<Order>()
     }
 
     fun getOrder(callback: (MutableList<Order>) -> Unit) {
@@ -83,73 +83,16 @@ class AdminActivity : BaseActivity<ActivitySalerBinding>(), OnUpdateProductCount
         loadData()
 
         getOrder {
-            listOrder= it
+            listOrder = it
         }
-        openFragment(FragmentAdminHome())
+        openFragment(FragmentAdminHome(),true)
         binding.bottomNavigation.setOnItemSelectedListener(OnItemSelectedBottomBar)
 
 
-        binding.imgShop.setOnClickListener {
-            putManafactural()
-        }
-
-        initProductCount()
-
-    }
-
-    private fun initProductCount() {
-
-    }
-
-    private fun putManafactural() {
-        putShopToFirebase {
-            it.forEach { item ->
-                val hasmap = HashMap<String, String>()
-                hasmap[Constant.SHOP_MANAFACT_NAME] = item.nameManu
-                hasmap[Constant.SHOP_MANAFACT_IMG] = item.imageUrl
-                firestore.collection(Constant.SHOP_MANAFACT).document(item.idManu)
-                    .set(hasmap)
-                    .addOnSuccessListener { taskId ->
-                        log("putShop", "\nshopID: ${taskId}")
-                    }
-                    .addOnFailureListener {
-                        log("putShop", "\nshopID: ${it.message}")
-                    }
-            }
-        }
     }
 
 
-    private fun putShopToFirebase(callback: (ArrayList<Manufacturer>) -> Unit) {
-        val listManfactuar = arrayListOf<Manufacturer>()
-        val totalItems = InitData.listPutData.size
-        var itemCount = 0
 
-        InitData.listPutData.forEach { item ->
-            putImage(item.imageUrl) { imageUrl ->
-                listManfactuar.add(Manufacturer(item.idManu, item.nameManu, imageUrl))
-                itemCount++
-                if (itemCount == totalItems) {
-                    callback(listManfactuar)
-                }
-            }
-        }
-    }
-
-
-    private fun putImage(resource: Int, callback: (String) -> Unit) {
-        storage.getReference("Manufacturer")
-            .putImgToStorage(
-                uri_from_drawable(this@AdminActivity, resource)!!,
-                object : OnPutImageListener {
-                    override fun onComplete(url: String) {
-                        callback(url)
-                    }
-
-                    override fun onFailure(mess: String) {
-                    }
-                })
-    }
 
 
     private fun loadData() {
@@ -162,50 +105,49 @@ class AdminActivity : BaseActivity<ActivitySalerBinding>(), OnUpdateProductCount
 
     }
 
-    fun openFragment(fragment: Fragment) {
-        binding.frameView.visibility = View.VISIBLE
-        replaceFragment(fragment, R.id.frame_view, true)
+    fun openFragment(fragment: Fragment, value: Boolean = false) {
+        if (value) {
+            binding.frameView1.visibility = View.VISIBLE
+            binding.frameView2.visibility = View.GONE
+            replaceFragment(fragment, R.id.frame_view1, true)
+        } else {
+            binding.frameView1.visibility = View.GONE
+            binding.frameView2.visibility = View.VISIBLE
+            replaceFragment(fragment, R.id.frame_view2, true)
+        }
     }
 
     private val OnItemSelectedBottomBar =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.icon_admin_home -> {
-                    openFragment(FragmentAdminHome())
+                    openFragment(FragmentAdminHome(),true)
                     return@OnNavigationItemSelectedListener true
                 }
 
                 R.id.ic_order_bill -> {
-                    openFragment(AdminOrderFragment())
+                    openFragment(AdminOrderFragment(),true)
                     return@OnNavigationItemSelectedListener true
                 }
 
                 R.id.ic_add_sp -> {
-                    openFragment(FragmentAddProduct())
+                    openFragment(FragmentAddProduct(),true)
                     return@OnNavigationItemSelectedListener true
                 }
 
                 R.id.ic_revenue -> {
-                    openFragment(FragmentRevenue())
+                    openFragment(FragmentRevenue(),true)
                     return@OnNavigationItemSelectedListener true
                 }
 
                 R.id.ic_account -> {
-//                    openFragment(FragmentAccount())
-                    // SignOut()
+                    openFragment(AdminInfoFragment())
                     return@OnNavigationItemSelectedListener true
                 }
             }
             true
         }
 
-    private fun SignOut() {
-        sharedPreferences.clear()
-        sharedPreferences.putBollean(Constant.KEY_SHOP_INIT, false)
-        sharedPreferences.putBollean(Constant.KEY_IS_SIGN_IN, false)
-        startActivity(Intent(this, SplashActivity::class.java))
-        finish()
-    }
 
     override fun onValue(count: Int) {
         binding.txtSumCount.text = "Sản phẩm: ${count}"

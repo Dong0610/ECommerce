@@ -20,7 +20,7 @@ import dong.duan.ecommerce.model.Product
 import dong.duan.ecommerce.model.ProductSize
 import dong.duan.ecommerce.utility.Constant
 
-class SearchFragment(var manufacturer: Manufacturer? = null) :
+class SearchFragment(var manufacturer: Manufacturer? = null,var keySreach:String="") :
     BaseFragment<FragmentExploxeBinding>() {
     override fun getBinding(
         inflater: LayoutInflater,
@@ -38,6 +38,14 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
             getAllProduct {
                 listProductAll = it
                 searchByManufact(manufacturer!!)
+            }
+        }
+        else if(keySreach!= ""){
+            getAllProduct {
+                listProductAll = it
+                MyDatabaseHelper().insertCurrent(keySreach)
+                searchByKey(keySreach)
+                loadData()
             }
         }
 
@@ -80,6 +88,21 @@ class SearchFragment(var manufacturer: Manufacturer? = null) :
     }
 
     private fun searchProduct(key: String) {
+        binding.llResult.visibility = View.VISIBLE
+        val listResult = mutableListOf<Product>()
+        binding.txtResult.setText("Kết quả cho $key")
+        val keyLowerCase = key.trim().replace(" ", "").lowercase()
+        listProductAll.forEach { product: Product ->
+            val manuID = product.idManufacturer.trim().replace(" ", "").lowercase()
+            val productName = product.name.trim().replace(" ", "").lowercase()
+
+            if (manuID.contains(keyLowerCase)|| productName.contains(key)) {
+                listResult.add(product)
+            }
+        }
+        setResultToView(listResult)
+    }
+    private fun searchByKey(key: String) {
         binding.llResult.visibility = View.VISIBLE
         val listResult = mutableListOf<Product>()
         binding.txtResult.setText("Kết quả cho $key")

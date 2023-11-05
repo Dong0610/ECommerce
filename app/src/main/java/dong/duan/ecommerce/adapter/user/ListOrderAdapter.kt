@@ -10,9 +10,10 @@ import dong.duan.ecommerce.databinding.ItemListOrderBinding
 import dong.duan.ecommerce.library.formatTime
 import dong.duan.ecommerce.model.Order
 import dong.duan.ecommerce.utility.colorByStatus
+import dong.duan.ecommerce.utility.formatToCurrency
 import dong.duan.ecommerce.utility.statusByType
 
-class ListOrderAdapter(context: Context) : BaseAdapter<Order,ItemListOrderBinding>() {
+class ListOrderAdapter(context: Context,var detail: (Order)->Unit) : BaseAdapter<Order,ItemListOrderBinding>() {
     override fun createBinding(
         inflater: LayoutInflater,
         parent: ViewGroup,
@@ -24,7 +25,7 @@ class ListOrderAdapter(context: Context) : BaseAdapter<Order,ItemListOrderBindin
     override fun bind(binding: ItemListOrderBinding, item: Order, position: Int) {
         binding.txtIdOrder.text=item.orderID
         binding.txtTime.text= formatTime(item.orderTime)
-        binding.txtTotalPrice.text="$"+(item.productCount*item.productPrice).toString()
+        binding.txtTotalPrice.text= formatToCurrency(item.productCount*item.productPrice)
         binding.txtStatus.text= statusByType(item.orderStatus)
         binding.txtShipingCount.text= "${item.productCount} sản phẩm"
         var isDetail= true
@@ -32,7 +33,6 @@ class ListOrderAdapter(context: Context) : BaseAdapter<Order,ItemListOrderBindin
         binding.root.setStrokeColor(colorByStatus(item.orderStatus))
 
         binding.icDetail.setOnClickListener {
-
             if (isDetail) {
                 binding.txtUpDateTime.visibility = View.VISIBLE
                 binding.icDetail.rotation = 90f
@@ -43,6 +43,10 @@ class ListOrderAdapter(context: Context) : BaseAdapter<Order,ItemListOrderBindin
                 isDetail = true
             }
         }
+        binding.txtDetail.setOnClickListener {
+            detail(item)
+        }
+
     }
 
 }

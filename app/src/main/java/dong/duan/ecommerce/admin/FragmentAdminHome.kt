@@ -105,16 +105,20 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
                         val star = document[Constant.PRODUCT_STAR].toString().toFloat()
                         val timeUp = document[Constant.PRODUCT_TIME_UP].toString()
                         val describle = document[Constant.PRODUCT_DESCRIBLE].toString()
-                        val manuID = document[Constant.PRODUCT_MANU_NAME].toString()
-                        val manuName = document[Constant.PRODUCT_TIME_UP].toString()
+                        val manuID = document[Constant.PRODUCT_MANU_ID].toString()
+                        val manuName = document[Constant.PRODUCT_MANU_NAME].toString()
                         val isSale = document[Constant.PRODUCT_IS_SALE].toString().toBoolean()
                         val productSizeList = mutableListOf<ProductSize>()
-
                         val productSizeData =
                             document[Constant.PRODUCT_SIZE] as? List<HashMap<String, Any>>
                                 ?: emptyList()
                         val style = document[Constant.PRODUCT_STYLE].toString()
                         val evaluator = document[Constant.PRODUCT_EVALUATION].toString().toInt()
+                        val tax = document[Constant.PRODUCT_TAX].toString().toFloat()
+                        val countbuy= document[Constant.PRODUCT_COUNTBUY].toString().toInt()
+                        val transMoney= document[Constant.PRODUCT_TRANSMONEY].toString().toFloat()
+
+
                         for (sizeMap in productSizeData) {
                             val size = sizeMap["size"]?.toString() ?: ""
                             val productSize = ProductSize(size)
@@ -138,7 +142,8 @@ class FragmentAdminHome : BaseFragment<FragmentHomeAdminBinding>() {
                             manuName,
                             describle,
                             style,
-                            evaluator
+                            evaluator,
+                            countbuy,tax,transMoney
                         )
                         if (idShop.equals(shopID)) {
                             productList.add(product)

@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/_6sdp"
             android:fontFamily="@font/worksans_bold"
             android:text="Card"
-            android:textColor="#9C27B0"
+            android:textColor="@color/textcolor"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_back"
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/worksans_bold"
-                    android:text="Banking name"
+                    android:text="Loại phương thức"
                     android:textColor="#223263"
                     android:textSize="@dimen/_13sdp" />
 
@@ -102,7 +102,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edt_bank_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -110,7 +110,7 @@
                         android:background="@color/white"
                         android:fontFamily="@font/worksans_medium"
                         android:gravity="top"
-                        android:hint="@string/enter_banking_name"
+
                         android:paddingEnd="@dimen/_14sdp"
                         android:textColor="@color/textcolor2"
                         android:textColorHint="#9098B1"
@@ -134,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/worksans_bold"
-                    android:text="Card Number"
+                    android:text="Tài khoản"
                     android:textColor="#223263"
                     android:textSize="@dimen/_13sdp" />
 

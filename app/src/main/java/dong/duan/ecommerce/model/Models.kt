@@ -34,8 +34,6 @@ data class ShopManager(
     var timeCreate: String
 ) : IMoldels
 
-
-data class Category(var id: String, var name: String, var icon: Int) : IMoldels
 data class Product(
     var id: String,
     var name: String,
@@ -53,11 +51,13 @@ data class Product(
     var nameManufacturer: String = "",
     var description: String = "",
     var style: String = "CD0113-400",
-    var evaluation:Int
+    var evaluation:Int,
+    var countBuy :Int = 0,
+    var tax:Float = 0f,
+    var transMoney: Float = 0f
 ) : IMoldels
 
 data class ProductSize(var size: String) : IMoldels
-data class ProductColor(var color: String) : IMoldels
 
 
 data class CardProduct(
@@ -70,7 +70,9 @@ data class CardProduct(
     var productName: String,
     var prductImg: String,
     var price: Float,
-    var size :Int
+    var size :Int,
+    var tax:Float ,
+    var transMoney: Float,
 ) : IMoldels
 
 
@@ -95,7 +97,7 @@ data class Order(
     var orderPrSize :Int = 0
 ) : IMoldels
 
-class Notification(var id: String, var varue: String, var time: String, var productID: String) :
+class Notification(var id: String, var value: String, var time: String,var productID:String, var orderID: String) :
     IMoldels
 
 data class Address constructor(
@@ -108,15 +110,18 @@ data class OrderData(var value:String="",var count:Int =0,var maxCount:Int =0):I
 
 data class CreditCard constructor(
     var idCard: String, var imgCard: Any?,
+    var surplus:Float,
+    var passCard:String,
     var carName: String, var cardNumber: String,
     var securutyCode: String,
     var holder: String, var endDate: String, var color: Int
 ) : IMoldels
 
+
 data class Manufacturer constructor(
     var idManu: String = "",
     var nameManu: String = "",
-    var imageUrl: String = ""
+    var imageUrl: Any = ""
 ) : IMoldels
 
 data class ManufacturerPut(var idManu: String, var nameManu: String, var imageUrl: Int) : IMoldels
@@ -136,6 +141,7 @@ data class ProductReview(
 
 
 
+data class PaymendMethod(var id:String,var name:String,var image:Any)
 
 
 

@@ -24,14 +24,15 @@ class FragmentOrder : BaseFragment<FragmentYourOrderBinding>() {
             closeFragment(this)
         }
 
-        order_adapter= ListOrderAdapter(requireContext())
+        order_adapter= ListOrderAdapter(requireContext()){
+            replaceFullViewFragment(FramentOrderDetail(it), true)
+        }
         binding.rcvListOrder.adapter=order_adapter
 
         getOrder { item->
             order_adapter!!.setItems(item)
         }
     }
-
     fun getOrder(calback:(MutableList<Order>)->Unit){
         firestore.collection(Constant.KEY_ORDER)
             .whereEqualTo(Constant.ORDER_USER_ID, sharedPreferences.getString(Constant.USER_ID, "").toString())

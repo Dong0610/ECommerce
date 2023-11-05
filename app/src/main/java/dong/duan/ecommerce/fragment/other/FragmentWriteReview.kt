@@ -36,7 +36,6 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
         container: ViewGroup?
     ) = FragmentWriteReviewBinding.inflate(layoutInflater)
 
-
     var listImagePR = mutableListOf<Uri?>()
 
 
@@ -56,7 +55,7 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
         }
 
         binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
-            var sumRatting = product.star*product.evaluation
+            val sumRatting = product.star*product.evaluation
             val rattingValue = (sumRatting+rating)/(product.evaluation+1)
             val hasmap = HashMap<String,Any>()
 
@@ -94,19 +93,15 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
         val listUrl = arrayListOf<String>()
         val totalItems = listImagePR.size - 1
         var itemCount = 0
-        if (listImagePR != null) {
-            listImagePR.removeAt(0)
-            listImagePR.forEach { uri ->
-                putImage(uri!!) { imageUrl ->
-                    listUrl.add(imageUrl)
-                    itemCount++
-                    if (itemCount == totalItems) {
-                        callback(listUrl)
-                    }
+        listImagePR.removeAt(0)
+        listImagePR.forEach { uri ->
+            putImage(uri!!) { imageUrl ->
+                listUrl.add(imageUrl)
+                itemCount++
+                if (itemCount == totalItems) {
+                    callback(listUrl)
                 }
             }
-        } else {
-            show_toast("List image is null")
         }
     }
 
@@ -116,8 +111,8 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
         loadding.show()
         if (listImagePR.size == 1) {
             hashMap[Constant.REVIEW_COMMERNT] = binding.edtComment.text.toString()
-            hashMap[Constant.REVIEW_TIME] = Date().toString()
-            hashMap[Constant.REVIEW_STAR] = 0.0f
+            hashMap[Constant.REVIEW_TIME] = Date()
+            hashMap[Constant.REVIEW_STAR] = binding.rating.rating
             hashMap[Constant.REVIEW_PR_ID] =product.id
             hashMap[Constant.REVIEW_USER_ID] =
                 sharedPreferences.getString(Constant.USER_ID, "").toString()
@@ -125,22 +120,21 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
                 sharedPreferences.getString(Constant.USER_NAME, "").toString()
             hashMap[Constant.REVIEW_USER_IMG] =
                 sharedPreferences.getString(Constant.USER_IMG, "").toString()
-            hashMap[Constant.REVIEW_IMG] = ""
+            hashMap[Constant.REVIEW_IMG] = ArrayList<String>()
             firestore.collection(Constant.KEY_REVIEW)
                 .add(hashMap).addOnSuccessListener {
-                    loadding.dismiss()
-                    show_toast("Đã lưu lại đáng giá!")
                     Handler(Looper.myLooper()!!).postDelayed(
                         {
+                            loadding.dismiss()
+                            show_toast("Đã lưu lại đáng giá!")
                             closeFragment(this@FragmentWriteReview)
                         }, 1500L
                     )
 
                 }.addOnFailureListener {
-                    show_toast(it.message.toString())
-                    loadding.dismiss()
                     Handler(Looper.myLooper()!!).postDelayed(
-                        {
+                        {    show_toast(it.message.toString())
+                            loadding.dismiss()
                             closeFragment(this@FragmentWriteReview)
                         }, 1500L
                     )
@@ -149,20 +143,20 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
             getImageArrlist { listUrl ->
                 hashMap[Constant.REVIEW_COMMERNT] = binding.edtComment.text.toString()
                 hashMap[Constant.REVIEW_TIME] = Date()
-                hashMap[Constant.REVIEW_STAR] = 0.0f
-                hashMap[Constant.REVIEW_IMG] = listUrl
+                hashMap[Constant.REVIEW_STAR] = binding.rating.rating
+                hashMap[Constant.REVIEW_PR_ID] =product.id
                 hashMap[Constant.REVIEW_USER_ID] =
                     sharedPreferences.getString(Constant.USER_ID, "").toString()
                 hashMap[Constant.REVIEW_USER_NAME] =
                     sharedPreferences.getString(Constant.USER_NAME, "").toString()
                 hashMap[Constant.REVIEW_USER_IMG] =
                     sharedPreferences.getString(Constant.USER_IMG, "").toString()
+                hashMap[Constant.REVIEW_IMG] = listUrl
                 firestore.collection(Constant.KEY_REVIEW)
                     .add(hashMap).addOnSuccessListener {
-                        loadding.dismiss()
-                        show_toast("Đã lưu lại đáng giá!")
                         Handler(Looper.myLooper()!!).postDelayed(
-                            {
+                            {                                loadding.dismiss()
+                                show_toast("Đã lưu lại đáng giá!")
                                 closeFragment(this@FragmentWriteReview)
                             }, 1500L
                         )
@@ -178,7 +172,11 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
                     }
             }
         }
+
+        commentSucces?.OnSuccess()
     }
+
+
 
 
     private fun loadProduct(listString: MutableList<Uri?>) {
@@ -204,6 +202,10 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
 
     companion object {
         private const val REQUEST_CODE_PICK_IMAGES = 101
+        private  var commentSucces:OnCommentSuccess ?=null
+        fun onCommentSuccess(cmss:OnCommentSuccess){
+            this.commentSucces= cmss;
+        }
     }
 
 
@@ -275,4 +277,8 @@ class FragmentWriteReview(var product: Product) : BaseFragment<FragmentWriteRevi
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGES)
     }
+}
+
+interface  OnCommentSuccess{
+    fun OnSuccess()
 }

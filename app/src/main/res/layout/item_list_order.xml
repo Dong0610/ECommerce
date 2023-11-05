@@ -159,6 +159,21 @@
             android:textColor="@color/textcolor"
             android:textSize="@dimen/_13sdp" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/txt_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:fontFamily="@font/worksans_medium"
+        android:text="Chi tiết"
+        android:layout_gravity="end"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/textcolor2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_time" />
 
 
 </dong.duan.ecommerce.utility.CustomLinearLayout>

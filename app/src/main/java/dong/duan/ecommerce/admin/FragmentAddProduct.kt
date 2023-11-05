@@ -199,6 +199,10 @@ class FragmentAddProduct : BaseFragment<FragmentAddProductBinding>() {
             hashMap[Constant.PRODUCT_MANU_NAME] = manufacturer.nameManu
             hashMap[Constant.PRODUCT_STYLE] = binding.edtProductStyle.text.toString()
             hashMap[Constant.PRODUCT_IS_SALE] = true
+            hashMap[Constant.PRODUCT_EVALUATION] =1
+            hashMap[Constant.PRODUCT_TAX]= binding.edtProductTax.text.toString();
+            hashMap[Constant.PRODUCT_COUNTBUY]=0
+            hashMap[Constant.PRODUCT_TRANSMONEY]= binding.edtProductTransmoney.text.toString()
 
             firestore.collection(Constant.KEY_PRODUCT)
                 .add(hashMap).addOnSuccessListener {

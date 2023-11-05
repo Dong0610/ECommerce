@@ -35,12 +35,12 @@ class SlideBannerFragment : BaseFragment<ItemSlideShowMainBinding>() {
 
             }
             1 -> {
-                binding.imgView.setImageResource( R.drawable.img_flash_sale)
+                binding.imgView.setImageResource( R.drawable.img_slide_1)
 
 
             }
             2 -> {
-                binding.imgView.setImageResource( R.drawable.img_flash_sale)
+                binding.imgView.setImageResource( R.drawable.img_slide_2)
             }
         }
     }

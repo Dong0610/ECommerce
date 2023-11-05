@@ -9,6 +9,7 @@ import dong.duan.ecommerce.R
 import dong.duan.ecommerce.databinding.ItemListCardViewBinding
 import dong.duan.ecommerce.model.CardProduct
 import dong.duan.ecommerce.utility.CheckBoxImageView
+import dong.duan.ecommerce.utility.formatToCurrency
 
 class CardAdapter(var onCardEvent: OnCardEvent) :BaseAdapter<CardProduct,ItemListCardViewBinding>() {
     override fun createBinding(
@@ -20,13 +21,13 @@ class CardAdapter(var onCardEvent: OnCardEvent) :BaseAdapter<CardProduct,ItemLis
 
         binding.iclove.setImageResource(if(item.islove) R.drawable.ic_love_card else R.drawable.ic_love_app)
         binding.txtName.setText(item.productName)
-        binding.txtPrice.text= item.price.toString()+" $"
+        binding.txtPrice.text= formatToCurrency(item.price)
         Glide.with(binding.root).load(item.prductImg).into(binding.imgProduct)
         binding.icPlus.setOnClickListener {
             item.nunCount = item.nunCount+1
             binding.txtNumCount.setText(item.nunCount.toString())
-            var titlePrice=item.nunCount*(item.price)
-            binding.txtPrice.setText("${titlePrice}")
+            val titlePrice=item.nunCount*(item.price)
+            binding.txtPrice.setText(formatToCurrency( titlePrice))
             onCardEvent.onUpdateCount(item.nunCount,item.productID)
         }
         binding.icDiscount.setOnClickListener {
@@ -36,7 +37,7 @@ class CardAdapter(var onCardEvent: OnCardEvent) :BaseAdapter<CardProduct,ItemLis
             }
             binding.txtNumCount.setText(item.nunCount.toString())
             val titlePrice=item.nunCount*item.price
-            binding.txtPrice.setText("${titlePrice}")
+            binding.txtPrice.setText(formatToCurrency( titlePrice))
             onCardEvent.onUpdateCount(item.nunCount,item.productID)
         }
         binding.iclove.setOnClickListener {
