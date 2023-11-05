@@ -19,8 +19,6 @@ class ListOrderAdapter(context: Context,var detail: (Order)->Unit) : BaseAdapter
         parent: ViewGroup,
         viewType: Int
     )= ItemListOrderBinding.inflate(inflater,parent,false)
-
-
     @SuppressLint("SetTextI18n")
     override fun bind(binding: ItemListOrderBinding, item: Order, position: Int) {
         binding.txtIdOrder.text=item.orderID
